@@ -16,92 +16,140 @@ const FootballContext = createContext({});
 export default FootballContext;
 
 export const FootballProvider = ({ children }: any) => {
-  const [leagues, setLeagues] = useState<any>([]);
+  const [leagues, setLeagues] = useState<any>({});
 
-  const getLeagues = async () => {
-    let res = createResult(data);
-    console.log(res, "jlkcehvbaw");
-    setLeagues(res);
-    return res;
-    // const myHeaders = new Headers();
-    // myHeaders.append("X-Auth-Token", apiKey);
-    // const raw = "";
-    // const requestOptions: any = {
-    //   method: "GET",
-    //   headers: myHeaders,
-    //   redirect: "follow",
-    // };
-    // await fetch("https://api.football-data.org/v4/matches", requestOptions)
-    //   .then(async (response) => {
-    //     let data = await response.json();
-    //     let res = createResult(data);
-    //     console.log(res);
-    //     setLeagues(res);
-    //   })
-    //   .catch((error) => console.error(error));
+  const getLeagues = () => {
+    const myHeaders = new Headers();
+    myHeaders.append("X-Auth-Token", apiKey);
+    const raw = "";
+    const requestOptions: any = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch("https://api.football-data.org/v4/matches", requestOptions)
+      .then(async (response) => {
+        let data = await response.json();
+        let res = createResult(data);
+        console.log(res);
+        setLeagues(res);
+      })
+      .catch((error) => console.error(error));
   };
 
   function createResult(data: any) {
-    let res = {
-      matches: {
-        EPL: { competition: {}, matches: [] },
-        SerieA: { competition: {}, matches: [] },
-        Bundesliga: { competition: {}, matches: [] },
-        Ligue1: { competition: {}, matches: [] },
-        LaLiga: { competition: {}, matches: [] },
-        Championship: { competition: {}, matches: [] },
-        PrimeiraLiga: { competition: {}, matches: [] },
+    let res = [
+      {
+        competition: {
+          id: 2021,
+          name: "Premier League",
+          code: "PL",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/PL.png",
+        },
+        matches: [],
       },
-    };
+      {
+        competition: {
+          id: 2019,
+          name: "Serie A",
+          code: "SA",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/SA.png",
+        },
+        matches: [],
+      },
+      {
+        competition: {
+          id: 2002,
+          name: "Bundesliga",
+          code: "BL1",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/BL1.png",
+        },
+        matches: [],
+      },
+      {
+        competition: {
+          id: 2015,
+          name: "Ligue 1",
+          code: "FL1",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/FL1.png",
+        },
+        matches: [],
+      },
+      {
+        competition: {
+          id: 2014,
+          name: "Primera Division",
+          code: "PD",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/PD.png",
+        },
+        matches: [],
+      },
+      {
+        competition: {
+          id: 2014,
+          name: "Primera Division",
+          code: "PD",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/PD.png",
+        },
+        matches: [],
+      },
+      {
+        competition: {
+          id: 2016,
+          name: "Championship",
+          code: "ELC",
+          type: "LEAGUE",
+          emblem: "https://crests.football-data.org/ELC.png",
+        },
+        matches: [],
+      },
+    ];
     //setting up res data
-    res.matches.SerieA.matches = data.matches.filter((match) => {
-      return match.competition.name == "Serie A";
-    });
-    res.matches.SerieA.competition = data.matches.filter((match) => {
-      return match.competition.name == "Serie A";
-    })[0]?.competition;
-    //-----------
-    res.matches.EPL.matches = data.matches.filter((match) => {
+    res[0].matches = data.matches.filter((match) => {
       return match.competition.name == "Premier League";
     });
-    res.matches.EPL.competition = data.matches.filter((match) => {
-      return match.competition.name == "Premier League";
-    })[0]?.competition;
+
     //-----------
-    res.matches.Bundesliga.matches = data.matches.filter((match) => {
+
+    res[1].matches = data.matches.filter((match) => {
+      return match.competition.name == "Serie A";
+    });
+
+    //-----------
+
+    res[2].matches = data.matches.filter((match) => {
       return match.competition.name == "Bundesliga";
     });
-    res.matches.Bundesliga.competition = data.matches.filter((match) => {
-      return match.competition.name == "Bundesliga";
-    })[0]?.competition;
+
     //-----------
-    res.matches.Ligue1.matches = data.matches.filter((match) => {
+
+    res[3].matches = data.matches.filter((match) => {
       return match.competition.name == "Ligue 1";
     });
-    res.matches.Ligue1.competition = data.matches.filter((match) => {
-      return match.competition.name == "Ligue 1";
-    })[0]?.competition;
+
     //-----------
-    res.matches.PrimeiraLiga.matches = data.matches.filter((match) => {
+
+    res[4].matches = data.matches.filter((match) => {
       return match.competition.name == "Primeira Liga";
     });
-    res.matches.PrimeiraLiga.competition = data.matches.filter((match) => {
-      return match.competition.name == "Primeira Liga";
-    })[0]?.competition;
+
     //-----------
-    res.matches.LaLiga.matches = data.matches.filter((match) => {
+
+    res[5].matches = data.matches.filter((match) => {
       return match.competition.name == "Primera Division";
     });
-    res.matches.LaLiga.competition = data.matches.filter((match) => {
-      return match.competition.name == "Primera Division";
-    })[0]?.competition;
+
     //-----------
-    res.matches.Championship.matches = data.matches.filter((match) => {
+
+    res[6].matches = data.matches.filter((match) => {
       return match.competition.name == "Championship";
     });
-    res.matches.Championship.competition = data.matches.filter((match) => {
-      return match.competition.name == "Championship";
-    })[0]?.competition;
 
     return res;
   }
