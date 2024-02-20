@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { MdOutlineStarOutline } from "react-icons/md";
+import { IoTimeOutline } from "react-icons/io5";
+
 const LiveMatch = ({ match }: any) => {
   const [time, setTime] = useState("");
 
@@ -43,6 +45,7 @@ const LiveMatch = ({ match }: any) => {
         </div>
       </div>
       <p className="italic text-sm text-gray-500">{time}</p>
+      <IoTimeOutline />
     </div>
   );
 };

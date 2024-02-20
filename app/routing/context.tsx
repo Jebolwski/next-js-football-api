@@ -114,9 +114,3 @@ export const Provider = ({ children }: any) => {
 
   return <Context.Provider value={contextData}>{children}</Context.Provider>;
 };
-
-const useAppContext = () => {
-  return useContext(Context);
-};
-
-export { useAppContext };

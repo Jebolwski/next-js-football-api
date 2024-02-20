@@ -4,10 +4,12 @@ import Image from "next/image";
 import LiveMatch from "./live-match";
 
 const Live_matches = () => {
-  const { leagues, getLeagues }: any = useContext(FootballContext);
+  const { leagues, getLeagues, getStandings }: any =
+    useContext(FootballContext);
 
   useLayoutEffect(() => {
     getLeagues();
+    getStandings(2021);
   }, []);
 
   return (
