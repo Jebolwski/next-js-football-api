@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import FootballContext from "../routing/football_context";
 import Image from "next/image";
 import LiveMatch from "./live-match";
-
+import Link from "next/link";
 const Live_matches = () => {
   const { leagues, getLeagues, getStandings }: any =
     useContext(FootballContext);
 
   useLayoutEffect(() => {
     getLeagues();
-    getStandings(2021);
   }, []);
+  console.log(leagues);
 
   return (
     <div className="w-full p-4 md:w-11/12">
@@ -18,8 +18,11 @@ const Live_matches = () => {
         leagues.map((league): any => {
           if (league.matches.length > 0) {
             return (
-              <div key={league.id}>
-                <div className="mt-4 shadow-md rounded-t-md border border-gray-300 flex items-center gap-2 p-1">
+              <div key={league.competition.id}>
+                <Link
+                  href={`/standings/${league.competition.id}`}
+                  className="mt-4 shadow-md rounded-t-md border border-gray-300 flex items-center gap-2 p-1"
+                >
                   <Image
                     src={league.competition?.emblem}
                     alt={league.competition?.name}
@@ -28,7 +31,7 @@ const Live_matches = () => {
                     height={100}
                   />
                   <p>{league.competition?.name}</p>
-                </div>
+                </Link>
                 <div className="shadow-md rounded-b-md border border-gray-300">
                   {league?.matches?.length > 0 ? (
                     league?.matches?.map((match, index): any => {

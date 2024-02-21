@@ -1,17 +1,30 @@
 import React, { useContext } from "react";
 import Context from "../routing/context";
+import Link from "next/link";
+import Image from "next/image";
+
 const Header = () => {
   const { user, logout }: any = useContext(Context);
   return (
     <div className={user != null ? "shadow-lg" : ""}>
       <div
         className={
-          (user == null ? "shadow-lg border border-black/5" : null) +
+          (user == null ? "shadow-lg border border-black/5" : "") +
           "p-3 flex justify-center items-center gap-5 bg-white/50"
         }
       >
-        <img src="logo.png" alt="Logo" className="w-16" />
-        <p className="text-xl">Pellucid Football</p>
+        <Link href={"/"}>
+          <Image
+            src={"/logo.png"}
+            alt={"Logo"}
+            className="w-16"
+            width={100}
+            height={100}
+          />
+        </Link>
+        <Link href={"/"}>
+          <p className="text-xl">Pellucid Football</p>
+        </Link>
       </div>
       {user != null ? (
         <div

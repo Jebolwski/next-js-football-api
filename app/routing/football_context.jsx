@@ -17,25 +17,24 @@ export default FootballContext;
 
 export const FootballProvider = ({ children }) => {
   const [leagues, setLeagues] = useState({});
+  const [standings, setStandings] = useState({});
 
   const getLeagues = () => {
-    setLeagues(createResult(data));
-    // const myHeaders = new Headers();
-    // myHeaders.append("X-Auth-Token", apiKey);
-    // const raw = "";
-    // const requestOptions = {
-    //   method: "GET",
-    //   headers: myHeaders,
-    //   redirect: "follow",
-    // };
-    // fetch("https://api.football-data.org/v4/matches", requestOptions)
-    //   .then(async (response) => {
-    //     let data = await response.json();
-    //     let res = createResult(data);
-    //     console.log(res);
-    //     setLeagues(res);
-    //   })
-    //   .catch((error) => console.error(error));
+    const myHeaders = new Headers();
+    myHeaders.append("X-Auth-Token", apiKey);
+    const raw = "";
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch("https://api.football-data.org/v4/matches", requestOptions)
+      .then(async (response) => {
+        let data = await response.json();
+        let res = createResult(data);
+        setLeagues(res);
+      })
+      .catch((error) => console.error(error));
   };
 
   const getStandings = (id) => {
@@ -53,7 +52,7 @@ export const FootballProvider = ({ children }) => {
     )
       .then(async (response) => {
         let data = await response.json();
-        console.log(data);
+        setStandings(data);
       })
       .catch((error) => console.error(error));
   };
@@ -78,10 +77,47 @@ export const FootballProvider = ({ children }) => {
     return result;
   }
 
+  const getTeam = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("X-Auth-Token", apiKey);
+    const raw = "";
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch(`https://api.football-data.org/v4/teams/${id}`, requestOptions)
+      .then(async (response) => {
+        let data = await response.json();
+        console.log(data);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const getPerson = (id) => {
+    const myHeaders = new Headers();
+    myHeaders.append("X-Auth-Token", apiKey);
+    const raw = "";
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch(`https://api.football-data.org/v4/persons/${id}`, requestOptions)
+      .then(async (response) => {
+        let data = await response.json();
+        console.log(data);
+      })
+      .catch((error) => console.error(error));
+  };
+
   let contextData = {
     leagues: leagues,
     getLeagues: getLeagues,
     getStandings: getStandings,
+    standings: standings,
+    getTeam: getTeam,
+    getPerson: getPerson,
   };
 
   return (
