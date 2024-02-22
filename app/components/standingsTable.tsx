@@ -1,16 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 const StandingsTable = ({ data }: any) => {
-  console.log(data);
-
   return (
-    <div className="my-2">
-      <p className="mb-2 font-bold">{data.group}</p>
-      <table className="w-full">
+    <div className="my-3 bg-gray-100 rounded-md border shadow-md border-gray-200 p-1">
+      <p className="mb-2 font-bold text-blue-400">{data.group}</p>
+      <table className="w-full text-xs sm:text-sm md:text-base">
         <thead>
           <tr>
-            <td className="text-center">Takım</td>
-            <td></td>
+            <td className="pl-2">Takım</td>
             <td></td>
             <td className="text-center">M</td>
             <td className="text-center">W</td>
@@ -23,28 +21,50 @@ const StandingsTable = ({ data }: any) => {
           </tr>
         </thead>
         <tbody>
-          {data.table.map((team): any => {
+          {data.table.map((team, index): any => {
             return (
-              <tr key={team.position}>
-                <td className="text-center">{team.position}</td>
-                <td>
-                  <Image
-                    src={team.team.crest}
-                    className="w-5"
-                    width={100}
-                    height={100}
-                    alt={team.team.name}
-                  />
+              <tr
+                key={team.position}
+                className={
+                  index == data.table.length - 1
+                    ? ""
+                    : "border-b border-gray-300"
+                }
+              >
+                <td className="text-center max-w-32">
+                  <div className="flex items-center gap-2">
+                    <p className="w-6 text-center">{team.position}</p>
+                    <Link href={"/team/" + team.team.id}>
+                      <Image
+                        src={team.team.crest}
+                        className="w-5 hidden sm:block"
+                        width={100}
+                        height={100}
+                        alt={team.team.name}
+                      />
+                    </Link>
+                    <Link href={"/team/" + team.team.id}>
+                      <p>{team.team.shortName}</p>
+                    </Link>
+                  </div>
                 </td>
-                <td className="text-center">{team.team.shortName}</td>
-                <td className="text-center">{team.playedGames}</td>
-                <td className="text-center">{team.won}</td>
-                <td className="text-center">{team.draw}</td>
-                <td className="text-center">{team.lost}</td>
-                <td className="text-center">{team.goalsFor}</td>
-                <td className="text-center">{team.goalsAgainst}</td>
-                <td className="text-center">{team.goalDifference}</td>
-                <td className="text-center">{team.points}</td>
+                <td></td>
+                <td className="text-center w-4 sm:w-6 md:w-9">
+                  {team.playedGames}
+                </td>
+                <td className="text-center w-4 sm:w-6 md:w-9">{team.won}</td>
+                <td className="text-center w-4 sm:w-6 md:w-9">{team.draw}</td>
+                <td className="text-center w-4 sm:w-6 md:w-9">{team.lost}</td>
+                <td className="text-center w-4 sm:w-6 md:w-9">
+                  {team.goalsFor}
+                </td>
+                <td className="text-center w-4 sm:w-6 md:w-9">
+                  {team.goalsAgainst}
+                </td>
+                <td className="text-center w-4 sm:w-6 md:w-9">
+                  {team.goalDifference}
+                </td>
+                <td className="text-center w-4 sm:w-6 md:w-9">{team.points}</td>
               </tr>
             );
           })}

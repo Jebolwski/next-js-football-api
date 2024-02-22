@@ -10,9 +10,11 @@ const Standings = (params: any) => {
     useContext(FootballContext);
   useEffect(() => {
     getStandings(params.params.id);
-    getPerson(7867);
-    getTeam(64);
+    // getPerson(7867);
+    // getTeam(64);
   }, []);
+
+  console.log(standings);
 
   return (
     <div className="flex justify-center">

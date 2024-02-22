@@ -10,10 +10,9 @@ const Live_matches = () => {
   useLayoutEffect(() => {
     getLeagues();
   }, []);
-  console.log(leagues);
 
   return (
-    <div className="w-full p-4 md:w-11/12">
+    <div className="w-full p-2 md:p-4 md:w-11/12">
       {leagues && leagues.length > 0 ? (
         leagues.map((league): any => {
           if (league.matches.length > 0) {
@@ -48,7 +47,7 @@ const Live_matches = () => {
           }
         })
       ) : (
-        <div>Yükleniyor...</div>
+        <div className="text-center font-semibold text-lg">Loading...</div>
       )}
     </div>
   );

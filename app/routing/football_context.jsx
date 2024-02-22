@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, cache } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase";
@@ -18,6 +18,7 @@ export default FootballContext;
 export const FootballProvider = ({ children }) => {
   const [leagues, setLeagues] = useState({});
   const [standings, setStandings] = useState({});
+  const [team, setTeam] = useState({});
 
   const getLeagues = () => {
     const myHeaders = new Headers();
@@ -32,6 +33,7 @@ export const FootballProvider = ({ children }) => {
       .then(async (response) => {
         let data = await response.json();
         let res = createResult(data);
+        console.log(data, "DATA");
         setLeagues(res);
       })
       .catch((error) => console.error(error));
@@ -89,7 +91,7 @@ export const FootballProvider = ({ children }) => {
     fetch(`https://api.football-data.org/v4/teams/${id}`, requestOptions)
       .then(async (response) => {
         let data = await response.json();
-        console.log(data);
+        setTeam(data);
       })
       .catch((error) => console.error(error));
   };
@@ -118,6 +120,7 @@ export const FootballProvider = ({ children }) => {
     standings: standings,
     getTeam: getTeam,
     getPerson: getPerson,
+    team: team,
   };
 
   return (
