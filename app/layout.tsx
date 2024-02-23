@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 import { Provider } from "./routing/context";
 import { Toaster } from "sonner";
 import { FootballProvider } from "./routing/football_context";
-
+import "./globals.css";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -13,16 +13,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-gray-100">
-        <FootballProvider>
-          <Provider>
-            <Header />
-            <main>{children}</main>
-            <Toaster position="bottom-right" richColors />
-            <Footer />
-          </Provider>
-        </FootballProvider>
-      </body>
+      <FootballProvider>
+        <Provider>
+          <body className="bg-gray-100">
+            <main>
+              <Header />
+              {children}
+              <Toaster position="bottom-right" richColors />
+              <Footer />
+            </main>
+          </body>
+        </Provider>
+      </FootballProvider>
     </html>
   );
 }

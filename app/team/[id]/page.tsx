@@ -2,14 +2,15 @@
 import FootballContext from "@/app/routing/football_context";
 import React, { useContext, useEffect } from "react";
 import Image from "next/image";
+import { FaShieldAlt } from "react-icons/fa";
+import { IoIosFootball } from "react-icons/io";
+import { TbPlayFootball } from "react-icons/tb";
 const Page = (params: any) => {
   const { getTeam, team }: any = useContext(FootballContext);
 
   useEffect(() => {
     getTeam(params.params.id);
   }, []);
-
-  console.log(team);
 
   return (
     <div className="flex justify-center">
@@ -53,9 +54,21 @@ const Page = (params: any) => {
               <div className="flex items-center flex-wrap gap-2">
                 {team.squad.map((player): any => {
                   return (
-                    <div className="bg-gray-100 shadow-md border border-gray-200 p-2 rounded-md">
+                    <div
+                      key={player.id}
+                      className="bg-gray-100 shadow-md border border-gray-200 p-2 rounded-md"
+                    >
                       <p className="text-sm font-semibold">{player.name}</p>
-                      <p className="text-xs italic">{player.position}</p>
+                      <div className="text-xs italic flex items-center gap-1">
+                        <p>{player.position}</p>
+                        {player.position == "Defence" ? (
+                          <FaShieldAlt size={13} />
+                        ) : player.position == "Midfield" ? (
+                          <TbPlayFootball size={17} />
+                        ) : (
+                          <IoIosFootball size={15} />
+                        )}
+                      </div>
                       <p className="text-xs">{player.nationality}</p>
                     </div>
                   );

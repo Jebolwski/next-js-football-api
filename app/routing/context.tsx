@@ -18,10 +18,21 @@ export const Provider = ({ children }: any) => {
   const router = useRouter();
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
+  const [darkMode, setDarkMode] = useState(0);
 
   useEffect(() => {
     if (user == null && localStorage.getItem("accessToken") != null) {
       setUser(jwtDecode(localStorage.getItem("accessToken")!));
+    }
+    console.log("CITEXETE  GELDSAİ");
+
+    if (
+      localStorage.getItem("dark-theme") &&
+      localStorage.getItem("dark-theme")?.toString() == "1"
+    ) {
+      setDarkMode(1);
+    } else {
+      setDarkMode(0);
     }
   }, []);
 
@@ -35,6 +46,16 @@ export const Provider = ({ children }: any) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const toggleDarkMode = () => {
+    let m = darkMode;
+    setDarkMode(darkMode == 1 ? 0 : 1);
+    if (m == 0) {
+      localStorage.setItem("dark-theme", "1");
+    } else {
+      localStorage.setItem("dark-theme", "0");
+    }
   };
 
   const handleLogin = async (email: string, password: string) => {
@@ -110,6 +131,8 @@ export const Provider = ({ children }: any) => {
     checkIfNotAuthenticated: checkIfNotAuthenticated,
     logout: logout,
     loginWithGoogle: loginWithGoogle,
+    darkMode: darkMode,
+    toggleDarkMode: toggleDarkMode,
   };
 
   return <Context.Provider value={contextData}>{children}</Context.Provider>;

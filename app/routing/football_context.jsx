@@ -19,7 +19,6 @@ export const FootballProvider = ({ children }) => {
   const [leagues, setLeagues] = useState({});
   const [standings, setStandings] = useState({});
   const [team, setTeam] = useState({});
-
   const getLeagues = () => {
     const myHeaders = new Headers();
     myHeaders.append("X-Auth-Token", apiKey);
@@ -33,7 +32,6 @@ export const FootballProvider = ({ children }) => {
       .then(async (response) => {
         let data = await response.json();
         let res = createResult(data);
-        console.log(data, "DATA");
         setLeagues(res);
       })
       .catch((error) => console.error(error));
