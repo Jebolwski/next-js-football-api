@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useContext, useState } from "react";
-import { useRouter } from "next/navigation";
 import FootballContext from "@/app/routing/football_context";
-import { IStandings, Table } from "@/app/interfaces/Standings";
-import Image from "next/image";
 import StandingsTable from "@/app/components/standingsTable";
 const Standings = (params: any) => {
   const { standings, getStandings, getPerson, getTeam }: any =
@@ -14,11 +11,9 @@ const Standings = (params: any) => {
     // getTeam(64);
   }, []);
 
-  console.log(standings);
-
   return (
-    <div className="flex justify-center">
-      <div className="shadow-md border border-gray-200 my-4 p-3 lg:w-3/4 w-11/12 bg-white/50 rounded-md">
+    <div className="flex justify-center dark:bg-gray-600 bg-gray-100 dark:text-white text-black">
+      <div className="shadow-md border dark:border-gray-600 border-gray-200 my-4 p-3 lg:w-3/4 w-11/12 dark:bg-gray-700 bg-white/50 rounded-md">
         <div className="flex items-center gap-1">
           <p>Season</p>
           <select name="" id="" className="bg-gray-300/50 rounded-md">

@@ -26,8 +26,8 @@ function Page() {
   }, [user]);
 
   return (
-    <div className="text-black flex justify-center mt-5 ">
-      <div className="p-4 shadow-lg xl:w-1/2 lg:2/3 w-5/6 rounded-md border border-black/5 bg-white/50">
+    <div className="text-black dark:bg-gray-800 flex justify-center p-5">
+      <div className="p-4 shadow-lg xl:w-1/2 lg:2/3 w-5/6 rounded-md border dark:text-white text-black border-black/5 dark:bg-gray-600 bg-white/50">
         <h3 className="text-2xl font-bold">Login</h3>
         <p className="text-sky-500 mt-3">Get into pellucid football</p>
         <div>
@@ -40,7 +40,7 @@ function Page() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className="p-2 outline-none border shadow-md border-stone-300 rounded-md my-1 flex-1 w-full"
+            className="p-2 outline-none border shadow-md dark:bg-gray-700 bg-gray-100 dark:border-gray-500 border-stone-300 rounded-md my-1 flex-1 w-full"
           />
         </div>
         <div>
@@ -53,7 +53,7 @@ function Page() {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            className="p-2 outline-none border shadow-md border-stone-300 rounded-md my-1 flex-1 w-full"
+            className="p-2 outline-none dark:bg-gray-700 bg-gray-100 border shadow-md  dark:border-gray-500 border-stone-300 rounded-md my-1 flex-1 w-full"
           />
         </div>
         <div className="flex justify-between items-center mt-3">
@@ -67,7 +67,10 @@ function Page() {
           </button>
           <div>
             Dont have an account?{" "}
-            <Link href={"/register"} className="text-blue-600 underline">
+            <Link
+              href={"/register"}
+              className="text-blue-600 dark:text-blue-400 underline"
+            >
               Register
             </Link>
           </div>

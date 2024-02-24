@@ -13,8 +13,8 @@ const Page = (params: any) => {
   }, []);
 
   return (
-    <div className="flex justify-center">
-      <div className="shadow-md border border-gray-200 my-4 p-3 lg:w-3/4 w-11/12 bg-white/50 rounded-md">
+    <div className="flex justify-center dark:bg-gray-800 dark:text-white text-black bg-white/50">
+      <div className="shadow-md border dark:border-gray-700  border-gray-200 my-4 p-3 lg:w-3/4 w-11/12 dark:bg-gray-700 bg-white/50 rounded-md">
         {team && team.area ? (
           <div>
             <div className="flex justify-between">
@@ -29,7 +29,7 @@ const Page = (params: any) => {
                 />
               </div>
               <div>
-                <div className="coach bg-gray-100 border border-gray-200 shadow-md rounded-md p-2">
+                <div className="coach dark:border-gray-600 dark:bg-gray-800 bg-gray-100 border border-gray-200 shadow-md rounded-md p-2">
                   <p className="font-semibold">{team.coach.name}</p>
                   <p className="text-sm italic">
                     {team.coach.contract.start} - {team.coach.contract.until}
@@ -56,7 +56,7 @@ const Page = (params: any) => {
                   return (
                     <div
                       key={player.id}
-                      className="bg-gray-100 shadow-md border border-gray-200 p-2 rounded-md"
+                      className="bg-gray-100 dark:bg-gray-800 shadow-md border dark:border-gray-700 border-gray-200 p-2 rounded-md"
                     >
                       <p className="text-sm font-semibold">{player.name}</p>
                       <div className="text-xs italic flex items-center gap-1">
@@ -77,7 +77,9 @@ const Page = (params: any) => {
             </div>
           </div>
         ) : (
-          <p className="text-center text-lg font-semibold">Loading...</p>
+          <p className="text-center text-lg font-semibold text-black dark:text-white">
+            Loading...
+          </p>
         )}
       </div>
     </div>

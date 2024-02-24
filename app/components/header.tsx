@@ -10,9 +10,9 @@ const Header = () => {
       <div
         className={
           (user == null
-            ? "shadow-lg border dark:bg-gray-500 bg-gray-100 border-black/5"
+            ? "shadow-lg border dark:bg-gray-700 dark:text-white text-black border-black/5 bg-white/50"
             : "") +
-          "p-3 flex justify-center dark:bg-gray-500 bg-gray-100 items-center gap-5 bg-white/50"
+          "p-3 flex justify-center dark:bg-gray-700 dark:text-white text-black items-center gap-5 bg-white/50"
         }
       >
         <Link href={"/"}>
@@ -31,19 +31,25 @@ const Header = () => {
       {user != null ? (
         <div
           className={
-            "flex items-center justify-between border border-black/5 bg-white/50 p-2"
+            "flex items-center justify-between border dark:bg-gray-700 bg-white/50 border-black/5 dark:text-white shadow-lg text-black p-2"
           }
         >
           <p>{user.email}</p>
-          <LuCloudMoon onClick={toggleDarkMode} />
+
           <button
-            className="bg-sky-400 text-white rounded-md px-4 py-1 text-sm shadow-md border border-sky-300"
+            className="bg-sky-400 dark:bg-sky-950 text-white rounded-md px-4 py-1 text-sm shadow-md border border-sky-300 dark:border-sky-900"
             onClick={logout}
           >
             Logout
           </button>
         </div>
       ) : null}
+      <div
+        onClick={toggleDarkMode}
+        className="dark:bg-gray-500 cursor-pointer shadow-lg bg-gray-200 border rounded-full p-2 dark:border-gray-700 border-gray-300 absolute right-1 top-1"
+      >
+        <LuCloudMoon className=" dark:text-white text-black" />
+      </div>
     </div>
   );
 };

@@ -15,7 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <FootballProvider>
         <Provider>
-          <body className="bg-gray-100">
+          <body className="bg-gray-100 dark:bg-gray-800 root">
             <main>
               <Header />
               {children}

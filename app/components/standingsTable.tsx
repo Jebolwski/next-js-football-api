@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 const StandingsTable = ({ data }: any) => {
   return (
-    <div className="my-3 bg-gray-100 rounded-md border shadow-md border-gray-200 p-1">
+    <div className="my-3 dark:bg-gray-800/75 bg-gray-100 rounded-md border shadow-md dark:border-gray-600 border-gray-200 p-1">
       <p className="mb-2 font-bold text-blue-400">{data.group}</p>
       <table className="w-full text-xs sm:text-sm md:text-base">
         <thead>

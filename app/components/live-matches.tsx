@@ -17,10 +17,13 @@ const Live_matches = () => {
         leagues.map((league): any => {
           if (league.matches.length > 0) {
             return (
-              <div key={league.competition.id}>
+              <div
+                key={league.competition.id}
+                className="dark:text-white text-black"
+              >
                 <Link
                   href={`/standings/${league.competition.id}`}
-                  className="mt-4 shadow-md rounded-t-md border border-gray-300 flex items-center gap-2 p-1"
+                  className="mt-4 shadow-md rounded-t-md border dark:bg-gray-500 bg-gray-100 border-gray-300 dark:border-gray-900 flex items-center gap-2 p-1"
                 >
                   <Image
                     src={league.competition?.emblem}
@@ -31,7 +34,7 @@ const Live_matches = () => {
                   />
                   <p>{league.competition?.name}</p>
                 </Link>
-                <div className="shadow-md rounded-b-md border border-gray-300">
+                <div className="shadow-md rounded-b-md border dark:bg-gray-700 border-gray-300 dark:border-gray-900">
                   {league?.matches?.length > 0 ? (
                     league?.matches?.map((match, index): any => {
                       return <LiveMatch match={match} key={index} />;
@@ -47,7 +50,9 @@ const Live_matches = () => {
           }
         })
       ) : (
-        <div className="text-center font-semibold text-lg">Loading...</div>
+        <div className="text-center font-semibold text-lg text-black dark:text-white">
+          Loading...
+        </div>
       )}
     </div>
   );

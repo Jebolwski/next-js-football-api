@@ -3,10 +3,8 @@ import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase";
-import { useContext } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { User } from "../interfaces/User";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { toast } from "sonner";
 
 const Context = createContext({});
@@ -24,7 +22,6 @@ export const Provider = ({ children }: any) => {
     if (user == null && localStorage.getItem("accessToken") != null) {
       setUser(jwtDecode(localStorage.getItem("accessToken")!));
     }
-    console.log("CITEXETE  GELDSAİ");
 
     if (
       localStorage.getItem("dark-theme") &&
@@ -35,6 +32,10 @@ export const Provider = ({ children }: any) => {
       setDarkMode(0);
     }
   }, []);
+
+  useEffect(() => {
+    document.querySelector(".root")?.classList.toggle("dark");
+  }, [darkMode]);
 
   const handleSignUp = async (email: string, password: string) => {
     const res = await createUserWithEmailAndPassword(email, password)
