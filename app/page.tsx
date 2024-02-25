@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <main className="luke-th flex min-h-screen flex-col items-center justify-between dark:bg-gray-800 bg-white">
+    <main className="luke-th flex min-h-screen flex-col items-center justify-between dark:bg-gray-800 bg-gray-50 ">
       <LiveMatches key={1} />
     </main>
   );

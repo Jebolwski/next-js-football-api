@@ -19,11 +19,11 @@ const Live_matches = () => {
             return (
               <div
                 key={league.competition.id}
-                className="dark:text-white text-black"
+                className="dark:text-white text-black shadow-lg hover:shadow-xl duration-200"
               >
                 <Link
                   href={`/standings/${league.competition.id}`}
-                  className="mt-4 shadow-md rounded-t-md border dark:bg-gray-500 bg-gray-100 border-gray-300 dark:border-gray-900 flex items-center gap-2 p-1"
+                  className="mt-4 shadow-md rounded-t-md border dark:bg-gray-500 bg-gray-200 border-gray-300 dark:border-gray-900 flex items-center gap-2 p-1"
                 >
                   <Image
                     src={league.competition?.emblem}
@@ -34,7 +34,7 @@ const Live_matches = () => {
                   />
                   <p>{league.competition?.name}</p>
                 </Link>
-                <div className="shadow-md rounded-b-md border dark:bg-gray-700 border-gray-300 dark:border-gray-900">
+                <div className="shadow-md rounded-b-md border dark:bg-gray-700 bg-gray-100 border-gray-300 dark:border-gray-900">
                   {league?.matches?.length > 0 ? (
                     league?.matches?.map((match, index): any => {
                       return <LiveMatch match={match} key={index} />;

@@ -10,9 +10,9 @@ const Header = () => {
       <div
         className={
           (user == null
-            ? "shadow-lg border dark:bg-gray-700 dark:text-white text-black border-black/5 bg-white/50"
+            ? "shadow-lg border dark:bg-gray-700 dark:text-white text-black border-black/5 bg-gray-200"
             : "") +
-          "p-3 flex justify-center dark:bg-gray-700 dark:text-white text-black items-center gap-5 bg-white/50"
+          "p-3 flex justify-center dark:bg-gray-700 dark:text-white text-black items-center gap-5 bg-gray-200"
         }
       >
         <Link href={"/"}>
@@ -31,7 +31,7 @@ const Header = () => {
       {user != null ? (
         <div
           className={
-            "flex items-center justify-between border dark:bg-gray-700 bg-white/50 border-black/5 dark:text-white shadow-lg text-black p-2"
+            "flex items-center justify-between border dark:bg-gray-700 bg-gray-200 border-black/5 dark:text-white shadow-lg text-black p-2"
           }
         >
           <p>{user.email}</p>
