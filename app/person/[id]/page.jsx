@@ -1,7 +1,7 @@
 "use client";
 import FootballContext from "@/app/routing/football_context";
 import Image from "next/image";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Link from "next/link";
 const Page = (params) => {
   const { getPerson, person, age } = useContext(FootballContext);

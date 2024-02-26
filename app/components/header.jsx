@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import Context from "../routing/context";
 import Link from "next/link";
 import Image from "next/image";

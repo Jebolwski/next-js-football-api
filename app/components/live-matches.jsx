@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import FootballContext from "../routing/football_context";
 import Image from "next/image";
 import LiveMatch from "./live-match";

@@ -3,7 +3,6 @@ import React, { useState, useContext } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { auth } from "@/app/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Context from "../routing/context";

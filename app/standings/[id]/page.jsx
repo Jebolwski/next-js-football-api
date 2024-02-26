@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import FootballContext from "@/app/routing/football_context";
 import StandingsTable from "@/app/components/standingsTable";
 const Standings = (params) => {

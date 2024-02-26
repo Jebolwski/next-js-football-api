@@ -4,15 +4,11 @@ import { FaUser, FaLock } from "react-icons/fa";
 import Link from "next/link";
 import { auth } from "@/app/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { CheckIfNotAuthenticated } from "../routing/conditions";
-import useAppContext from "../routing/context";
 import Context from "../routing/context";
 
 function Page() {
-  const { handleLogin, user, checkIfNotAuthenticated, loginWithGoogle } =
-    useContext(Context);
+  const { handleLogin, user, loginWithGoogle } = useContext(Context);
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
   const [email, setEmail] = useState("");

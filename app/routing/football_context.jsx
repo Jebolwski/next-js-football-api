@@ -1,14 +1,4 @@
-import { jwtDecode } from "jwt-decode";
-import { createContext, useState, useEffect, cache } from "react";
-import { useRouter } from "next/navigation";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase";
-import { useContext } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { User } from "../interfaces/User";
-import { toast } from "sonner";
-import data from "../data/example_matches_data.json";
+import { createContext, useState } from "react";
 import { apiKey } from "@/app/firebase";
 
 const FootballContext = createContext({});
