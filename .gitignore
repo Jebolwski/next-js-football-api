@@ -131,4 +131,4 @@ dist
 
 
 /node_modules
-/app/firebase.js
+# /app/firebase.js
