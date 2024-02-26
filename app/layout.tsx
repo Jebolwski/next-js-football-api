@@ -6,6 +6,8 @@ import { Provider } from "./routing/context";
 import { Toaster } from "sonner";
 import { FootballProvider } from "./routing/football_context";
 import "./globals.css";
+import Head from "next/head";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -13,6 +15,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <title>layout</title>
+        <meta
+          name="description"
+          content="Check out iPhone 12 XR Pro and iPhone 12 Pro Max. Visit your local store and for expert advice."
+          key="desc"
+        />
+      </Head>
       <FootballProvider>
         <Provider>
           <body className="bg-gray-100 dark:bg-gray-800 root">

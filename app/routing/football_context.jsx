@@ -18,7 +18,32 @@ export default FootballContext;
 export const FootballProvider = ({ children }) => {
   const [leagues, setLeagues] = useState({});
   const [standings, setStandings] = useState({});
+  const [age, setAge] = useState();
   const [team, setTeam] = useState({});
+  const [person, setPerson] = useState({});
+
+  function calculateAge(birthDate) {
+    // Parse the birthDate string to a Date object
+    const birthDateObject = new Date(birthDate);
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the difference in years
+    const age = currentDate.getFullYear() - birthDateObject.getFullYear();
+
+    // Adjust the age if the birthday hasn't occurred yet this year
+    if (
+      currentDate.getMonth() < birthDateObject.getMonth() ||
+      (currentDate.getMonth() === birthDateObject.getMonth() &&
+        currentDate.getDate() < birthDateObject.getDate())
+    ) {
+      return age - 1;
+    }
+
+    return age;
+  }
+
   const getLeagues = () => {
     const myHeaders = new Headers();
     myHeaders.append("X-Auth-Token", apiKey);
@@ -106,7 +131,8 @@ export const FootballProvider = ({ children }) => {
     fetch(`https://api.football-data.org/v4/persons/${id}`, requestOptions)
       .then(async (response) => {
         let data = await response.json();
-        console.log(data);
+        setPerson(data);
+        setAge(calculateAge(data.dateOfBirth));
       })
       .catch((error) => console.error(error));
   };
@@ -119,6 +145,8 @@ export const FootballProvider = ({ children }) => {
     getTeam: getTeam,
     getPerson: getPerson,
     team: team,
+    person: person,
+    age: age,
   };
 
   return (

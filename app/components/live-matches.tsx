@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import FootballContext from "../routing/football_context";
 import Image from "next/image";
