@@ -3,8 +3,8 @@ import FootballContext from "@/app/routing/football_context";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-const Page = (params: any) => {
-  const { getPerson, person, age }: any = useContext(FootballContext);
+const Page = (params) => {
+  const { getPerson, person, age } = useContext(FootballContext);
   useEffect(() => {
     getPerson(params.params.id);
   }, []);

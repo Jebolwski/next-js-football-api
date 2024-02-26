@@ -11,7 +11,7 @@ import useAppContext from "../routing/context";
 import Context from "../routing/context";
 
 function Page() {
-  const { handleLogin, user, checkIfNotAuthenticated, loginWithGoogle }: any =
+  const { handleLogin, user, checkIfNotAuthenticated, loginWithGoogle } =
     useContext(Context);
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);

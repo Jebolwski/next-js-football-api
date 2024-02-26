@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-const StandingsTable = ({ data }: any) => {
+const StandingsTable = ({ data }) => {
   return (
     <div className="my-3 dark:bg-gray-800/75 bg-gray-100 rounded-md border shadow-md dark:border-gray-600 border-gray-200 p-1">
       <p className="mb-2 font-bold text-blue-400">{data.group}</p>
@@ -21,7 +21,7 @@ const StandingsTable = ({ data }: any) => {
           </tr>
         </thead>
         <tbody>
-          {data.table.map((team, index): any => {
+          {data.table.map((team, index) => {
             return (
               <tr
                 key={team.position}

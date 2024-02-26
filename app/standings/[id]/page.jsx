@@ -2,8 +2,8 @@
 import React, { useEffect, useContext, useState } from "react";
 import FootballContext from "@/app/routing/football_context";
 import StandingsTable from "@/app/components/standingsTable";
-const Standings = (params: any) => {
-  const { standings, getStandings, getPerson, getTeam }: any =
+const Standings = (params) => {
+  const { standings, getStandings, getPerson, getTeam } =
     useContext(FootballContext);
   useEffect(() => {
     getStandings(params.params.id);
@@ -23,7 +23,7 @@ const Standings = (params: any) => {
           </select>
         </div>
         {standings && standings?.standings?.length > 0
-          ? standings?.standings.map((group, index): any => {
+          ? standings?.standings.map((group, index) => {
               return <StandingsTable data={group} key={index} />;
             })
           : null}

@@ -11,8 +11,8 @@ const Context = createContext({});
 
 export default Context;
 
-export const Provider = ({ children }: any) => {
-  const [user, setUser] = useState<any>(null);
+export const Provider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const router = useRouter();
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);

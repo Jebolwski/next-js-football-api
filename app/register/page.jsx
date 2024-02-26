@@ -14,7 +14,7 @@ const Page = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const { handleSignUp }: any = useContext(Context);
+  const { handleSignUp } = useContext(Context);
   const SignUp = async () => {
     handleSignUp(email, password);
     setEmail("");

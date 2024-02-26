@@ -5,7 +5,7 @@ import { IoTimeOutline } from "react-icons/io5";
 import { FaRegCalendarTimes } from "react-icons/fa";
 import Link from "next/link";
 
-const LiveMatch = ({ match }: any) => {
+const LiveMatch = ({ match }) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {

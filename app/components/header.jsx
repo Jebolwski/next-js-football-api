@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { LuCloudMoon } from "react-icons/lu";
 const Header = () => {
-  const { user, logout, toggleDarkMode, darkMode }: any = useContext(Context);
+  const { user, logout, toggleDarkMode, darkMode } = useContext(Context);
   return (
     <div className={user != null ? "shadow-lg" : ""}>
       <div

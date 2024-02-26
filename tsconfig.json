@@ -27,7 +27,17 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/routing/football_context.jsx",
-    "app/components/live-matches.jsx"
+    "app/components/live-matches.jsx",
+    "app/components/header.jsx",
+    "app/components/live-match.jsx",
+    "app/components/standingsTable.jsx",
+    "app/components/team.jsx",
+    "app/login/page.jsx",
+    "app/register/page.jsx",
+    "app/routing/context.jsx",
+    "app/standings/[id]/page.jsx",
+    "app/team/[id]/page.jsx",
+    "app/person/[id]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
