@@ -7,10 +7,10 @@ import { FaShieldAlt } from "react-icons/fa";
 import { IoIosFootball } from "react-icons/io";
 import { TbPlayFootball } from "react-icons/tb";
 
-const Team = (params: any) => {
+const Team = (params) => {
   console.log(params);
 
-  const { getTeam, team, getPerson }: any = useContext(FootballContext);
+  const { getTeam, team, getPerson } = useContext(FootballContext);
   useEffect(() => {
     getTeam(params.params.id);
   }, []);
@@ -53,7 +53,7 @@ const Team = (params: any) => {
                   <div className="dark:border-gray-600 dark:bg-gray-800 bg-gray-200 border border-gray-200 shadow-md rounded-md p-2 mt-2">
                     <p className="italic text-sm">Running competitions</p>
                     <div className="flex items-center gap-2 justify-evenly mt-2">
-                      {team.runningCompetitions.map((competition): any => {
+                      {team.runningCompetitions.map((competition) => {
                         return (
                           <Link
                             href={"/standings/" + competition.id}
@@ -80,7 +80,7 @@ const Team = (params: any) => {
               <div className="mt-6">
                 <h2 className="font-semibold mb-2">Squad</h2>
                 <div className="flex items-center flex-wrap gap-2">
-                  {team.squad.map((player): any => {
+                  {team.squad.map((player) => {
                     return (
                       <Link
                         href={"/person/" + player.id}

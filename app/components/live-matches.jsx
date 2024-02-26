@@ -5,8 +5,7 @@ import Image from "next/image";
 import LiveMatch from "./live-match";
 import Link from "next/link";
 const Live_matches = () => {
-  const { leagues, getLeagues, getStandings }: any =
-    useContext(FootballContext);
+  const { leagues, getLeagues, getStandings } = useContext(FootballContext);
 
   useLayoutEffect(() => {
     getLeagues();
@@ -15,7 +14,7 @@ const Live_matches = () => {
   return (
     <div className="w-full p-2 md:p-4 md:w-11/12">
       {leagues && leagues.length > 0 ? (
-        leagues.map((league): any => {
+        leagues.map((league) => {
           if (league.matches.length > 0) {
             return (
               <div
@@ -37,7 +36,7 @@ const Live_matches = () => {
                 </Link>
                 <div className="shadow-md rounded-b-md border dark:bg-gray-700 bg-gray-100 border-gray-300 dark:border-gray-900">
                   {league?.matches?.length > 0 ? (
-                    league?.matches?.map((match, index): any => {
+                    league?.matches?.map((match, index) => {
                       return <LiveMatch match={match} key={index} />;
                     })
                   ) : (
