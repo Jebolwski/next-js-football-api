@@ -20,7 +20,7 @@ export const Provider = ({ children }) => {
 
   useEffect(() => {
     if (user == null && localStorage.getItem("accessToken") != null) {
-      setUser(jwtDecode(localStorage.getItem("accessToken")!));
+      setUser(jwtDecode(localStorage.getItem("accessToken")));
     }
 
     if (
@@ -37,7 +37,7 @@ export const Provider = ({ children }) => {
     document.querySelector(".root")?.classList.toggle("dark");
   }, [darkMode]);
 
-  const handleSignUp = async (email: string, password: string) => {
+  const handleSignUp = async (email, password) => {
     const res = await createUserWithEmailAndPassword(email, password)
       .then((res) => {
         console.log(res);
@@ -59,7 +59,7 @@ export const Provider = ({ children }) => {
     }
   };
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
