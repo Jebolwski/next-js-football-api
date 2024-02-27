@@ -35,21 +35,25 @@ export const FootballProvider = ({ children }) => {
   }
 
   const getLeagues = () => {
-    const myHeaders = new Headers();
+    const myHeaders = new Headers("");
     myHeaders.append("X-Auth-Token", apiKey);
-    const raw = "";
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
       redirect: "follow",
+      credentials: "same-origin",
     };
     fetch("https://api.football-data.org/v4/matches", requestOptions)
       .then(async (response) => {
-        let data = await response.json();
-        let res = createResult(data);
-        setLeagues(res);
+        if (response.status == 200) {
+          let data = await response.json();
+          let res = createResult(data);
+          setLeagues(res);
+        } else {
+          console.log(response.status, "HATA KALORİFER");
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error), "!!!!!!!!!!!!!");
   };
 
   const getStandings = (id) => {
@@ -100,6 +104,7 @@ export const FootballProvider = ({ children }) => {
       method: "GET",
       headers: myHeaders,
       redirect: "follow",
+      mode: "no-cors",
     };
     fetch(`https://api.football-data.org/v4/teams/${id}`, requestOptions)
       .then(async (response) => {
