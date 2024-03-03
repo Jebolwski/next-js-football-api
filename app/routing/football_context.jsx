@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import { apiKey } from "@/app/firebase";
-
 const FootballContext = createContext({});
 
 export default FootballContext;
@@ -34,24 +33,15 @@ export const FootballProvider = ({ children }) => {
     return age;
   }
 
-  const getLeagues = () => {
-    const myHeaders = new Headers("");
-    myHeaders.append("X-Auth-Token", apiKey);
-    const requestOptions = {
+  const getLeagues = async () => {
+    fetch("/api/leagues", {
       method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-      credentials: "same-origin",
-    };
-    fetch("https://api.football-data.org/v4/matches", requestOptions)
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(async (response) => {
-        if (response.status == 200) {
-          let data = await response.json();
-          let res = createResult(data);
-          setLeagues(res);
-        } else {
-          console.log(response.status, "HATA KALORİFER");
-        }
+        console.log(response, response.status);
       })
       .catch((error) => console.error(error), "!!!!!!!!!!!!!");
   };
@@ -75,26 +65,6 @@ export const FootballProvider = ({ children }) => {
       })
       .catch((error) => console.error(error));
   };
-
-  function createResult(data) {
-    let arr = {};
-
-    data.matches.forEach((element) => {
-      if (arr[element.competition.id] == null) {
-        arr[element.competition.id] = [element];
-      } else {
-        arr[element.competition.id] = [element, ...arr[element.competition.id]];
-      }
-    });
-
-    let result = [];
-
-    for (const [key, value] of Object.entries(arr)) {
-      result.push({ competition: value[0].competition, matches: value });
-    }
-
-    return result;
-  }
 
   const getTeam = (id) => {
     const myHeaders = new Headers();
