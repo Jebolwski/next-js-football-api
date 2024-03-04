@@ -37,7 +37,8 @@
     "app/routing/context.jsx",
     "app/standings/[id]/page.jsx",
     "app/team/[id]/page.jsx",
-    "app/person/[id]/page.jsx"
+    "app/person/[id]/page.jsx",
+    "app/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

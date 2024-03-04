@@ -8,8 +8,6 @@ import { IoIosFootball } from "react-icons/io";
 import { TbPlayFootball } from "react-icons/tb";
 
 const Team = (params) => {
-  console.log(params);
-
   const { getTeam, team, getPerson } = useContext(FootballContext);
   useEffect(() => {
     getTeam(params.params.id);

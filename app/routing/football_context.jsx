@@ -41,24 +41,22 @@ export const FootballProvider = ({ children }) => {
       },
     })
       .then(async (response) => {
-        console.log(response, response.status);
+        if (response.status == 200) {
+          let data = await response.json();
+          setLeagues(data);
+        }
       })
       .catch((error) => console.error(error), "!!!!!!!!!!!!!");
   };
 
   const getStandings = (id) => {
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Token", apiKey);
-    const raw = "";
-    const requestOptions = {
+    setStandings();
+    fetch(`/api/standings/${id}`, {
       method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch(
-      `https://api.football-data.org/v4/competitions/${id}/standings`,
-      requestOptions
-    )
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(async (response) => {
         let data = await response.json();
         setStandings(data);
@@ -66,25 +64,26 @@ export const FootballProvider = ({ children }) => {
       .catch((error) => console.error(error));
   };
 
-  const getTeam = (id) => {
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Token", apiKey);
-    const raw = "";
-    const requestOptions = {
+  const getTeam = async (id) => {
+    setTeam();
+    fetch(`/api/team-data/${id}`, {
       method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-      mode: "no-cors",
-    };
-    fetch(`https://api.football-data.org/v4/teams/${id}`, requestOptions)
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(async (response) => {
-        let data = await response.json();
-        setTeam(data);
+        console.log(response);
+        if (response.status == 200) {
+          let data = await response.json();
+          setTeam(data);
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error), "!!!!!!!!!!!!!");
   };
 
   const getPerson = (id) => {
+    setPerson();
     const myHeaders = new Headers();
     myHeaders.append("X-Auth-Token", apiKey);
     const raw = "";

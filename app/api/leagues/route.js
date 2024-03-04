@@ -1,10 +1,10 @@
 import { apiKey } from "@/app/firebase";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
   const myHeaders = new Headers();
   myHeaders.append("X-Auth-Token", apiKey);
+
   const requestOptions = {
     method: "GET",
     headers: myHeaders,
