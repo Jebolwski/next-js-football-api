@@ -8,7 +8,6 @@ const Page = (params) => {
   useEffect(() => {
     getPerson(params.params.id);
   }, []);
-  console.log(person);
 
   return (
     <div className="dark:bg-gray-800 bg-gray-50 dark:text-white text-black p-4 flex justify-center">
