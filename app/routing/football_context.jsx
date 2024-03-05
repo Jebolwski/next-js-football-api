@@ -84,15 +84,12 @@ export const FootballProvider = ({ children }) => {
 
   const getPerson = (id) => {
     setPerson();
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Token", apiKey);
-    const raw = "";
-    const requestOptions = {
+    fetch(`/api/persons/${id}`, {
       method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    fetch(`https://api.football-data.org/v4/persons/${id}`, requestOptions)
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(async (response) => {
         let data = await response.json();
         setPerson(data);

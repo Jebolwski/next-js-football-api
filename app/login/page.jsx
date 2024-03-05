@@ -52,7 +52,7 @@ function Page() {
             className="p-2 outline-none dark:bg-gray-700 bg-gray-100 border shadow-md  dark:border-gray-500 border-stone-300 rounded-md my-1 flex-1 w-full"
           />
         </div>
-        <div className="flex justify-between items-center mt-3">
+        <div className="flex justify-between gap-3 items-center mt-3">
           <button
             onClick={() => {
               handleLogin(email, password);
@@ -61,11 +61,11 @@ function Page() {
           >
             Login
           </button>
-          <div>
+          <div className="text-sm lg:text-base">
             Dont have an account?{" "}
             <Link
               href={"/register"}
-              className="text-blue-600 dark:text-blue-400 underline"
+              className="text-blue-600 dark:text-blue-400 underline text-sm lg:text-base"
             >
               Register
             </Link>
