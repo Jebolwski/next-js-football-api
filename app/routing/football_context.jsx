@@ -9,6 +9,7 @@ export const FootballProvider = ({ children }) => {
   const [standings, setStandings] = useState({});
   const [age, setAge] = useState();
   const [team, setTeam] = useState({});
+  const [matches, setMatches] = useState({});
   const [person, setPerson] = useState({});
 
   function calculateAge(birthDate) {
@@ -43,6 +44,7 @@ export const FootballProvider = ({ children }) => {
       .then(async (response) => {
         if (response.status == 200) {
           let data = await response.json();
+          console.log(data);
           setLeagues(data);
         }
       })
@@ -98,6 +100,20 @@ export const FootballProvider = ({ children }) => {
       .catch((error) => console.error(error));
   };
 
+  const getTeamsMatches = (id) => {
+    fetch(`/api/team-matches/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(async (response) => {
+        let data = await response.json();
+        setMatches(data);
+      })
+      .catch((error) => console.error(error));
+  };
+
   let contextData = {
     leagues: leagues,
     getLeagues: getLeagues,
@@ -108,6 +124,8 @@ export const FootballProvider = ({ children }) => {
     team: team,
     person: person,
     age: age,
+    matches: matches,
+    getTeamsMatches: getTeamsMatches,
   };
 
   return (

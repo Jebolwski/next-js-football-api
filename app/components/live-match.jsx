@@ -43,7 +43,13 @@ const LiveMatch = ({ match }) => {
             />
           </Link>
         </div>
-        <div>-</div>
+        <Link
+          href={{
+            pathname: "/match/" + match.homeTeam.id,
+          }}
+        >
+          -
+        </Link>
         <div className="flex items-center justify-start gap-1 w-full">
           <Link href={"/team/" + match.awayTeam.id}>
             <h3>{match.awayTeam.shortName}</h3>
