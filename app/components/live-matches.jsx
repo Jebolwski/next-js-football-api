@@ -5,11 +5,15 @@ import Image from "next/image";
 import LiveMatch from "./live-match";
 import Link from "next/link";
 const Live_matches = () => {
-  const { leagues, getLeagues, getStandings } = useContext(FootballContext);
+  const { leagues, getLeagues, getStandings, showOdds, toggleShowOdds } =
+    useContext(FootballContext);
 
   useLayoutEffect(() => {
     getLeagues();
+    toggleShowOdds(false);
   }, []);
+
+  console.log(showOdds);
 
   return (
     <div className="w-full p-2 md:p-4 md:w-11/12">

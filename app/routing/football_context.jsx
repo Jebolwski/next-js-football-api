@@ -11,6 +11,7 @@ export const FootballProvider = ({ children }) => {
   const [team, setTeam] = useState({});
   const [matches, setMatches] = useState({});
   const [person, setPerson] = useState({});
+  const [showOdds, setShowOdds] = useState(false);
 
   function calculateAge(birthDate) {
     // Parse the birthDate string to a Date object
@@ -44,7 +45,6 @@ export const FootballProvider = ({ children }) => {
       .then(async (response) => {
         if (response.status == 200) {
           let data = await response.json();
-          console.log(data);
           setLeagues(data);
         }
       })
@@ -75,7 +75,6 @@ export const FootballProvider = ({ children }) => {
       },
     })
       .then(async (response) => {
-        console.log(response);
         if (response.status == 200) {
           let data = await response.json();
           setTeam(data);
@@ -109,9 +108,18 @@ export const FootballProvider = ({ children }) => {
     })
       .then(async (response) => {
         let data = await response.json();
+        console.log(data);
         setMatches(data);
       })
       .catch((error) => console.error(error));
+  };
+
+  const toggleShowOdds = (toggle = "a") => {
+    if (toggle == "a") {
+      setShowOdds(toggle);
+    } else {
+      setShowOdds(!showOdds);
+    }
   };
 
   let contextData = {
@@ -126,6 +134,8 @@ export const FootballProvider = ({ children }) => {
     age: age,
     matches: matches,
     getTeamsMatches: getTeamsMatches,
+    toggleShowOdds: toggleShowOdds,
+    showOdds: showOdds,
   };
 
   return (

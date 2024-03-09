@@ -6,10 +6,19 @@ import Link from "next/link";
 import { FaShieldAlt } from "react-icons/fa";
 import { IoIosFootball } from "react-icons/io";
 import { TbPlayFootball } from "react-icons/tb";
+import LiveMatch from "./live-match";
+import { FaMoneyCheckAlt } from "react-icons/fa";
 
 const Team = (params) => {
-  const { getTeam, team, getPerson, getTeamsMatches, matches } =
-    useContext(FootballContext);
+  const {
+    getTeam,
+    team,
+    getPerson,
+    getTeamsMatches,
+    matches,
+    showOdds,
+    toggleShowOdds,
+  } = useContext(FootballContext);
   useEffect(() => {
     getTeam(params.params.id);
     getTeamsMatches(params.params.id);
@@ -108,11 +117,27 @@ const Team = (params) => {
                 </div>
               </div>
               <div className="mt-5 w-full shadow-md border dark:border-gray-700  border-gray-300 my-4 p-3 dark:bg-gray-800 bg-white/50 rounded-md">
-                <h3 className="text-lg font-semibold">Matches</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold">Matches</h3>
+                  <div
+                    onClick={toggleShowOdds}
+                    className="dark:bg-gray-500 cursor-pointer shadow-lg bg-gray-200 border rounded-full p-1 dark:border-gray-700 border-gray-300 "
+                  >
+                    <FaMoneyCheckAlt
+                      title="Show/Hide Odds"
+                      className=" dark:text-white text-black"
+                      size={12}
+                    />
+                  </div>
+                </div>
                 {matches &&
                   matches.matches &&
                   matches?.matches.map((match) => {
-                    return <div>{match.id}</div>;
+                    return (
+                      <div className="my-2">
+                        <LiveMatch match={match} key={match.id} team={team} />
+                      </div>
+                    );
                   })}
               </div>
             </div>
