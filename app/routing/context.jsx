@@ -40,7 +40,6 @@ export const Provider = ({ children }) => {
   const handleSignUp = async (email, password) => {
     const res = await createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log(res);
         router.push("/login");
         toast.success("Successfully signed in ✨");
       })
@@ -101,16 +100,12 @@ export const Provider = ({ children }) => {
 
   const checkIfAuthenticated = () => {
     if (user == null) {
-      console.log("user yok");
       router.back();
     }
   };
 
   const checkIfNotAuthenticated = () => {
-    console.log(user);
-
     if (user != null) {
-      console.log("user var");
       router.back();
       return;
     }

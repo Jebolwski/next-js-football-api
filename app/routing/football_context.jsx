@@ -108,7 +108,6 @@ export const FootballProvider = ({ children }) => {
     })
       .then(async (response) => {
         let data = await response.json();
-        console.log(data);
         setMatches(data);
       })
       .catch((error) => console.error(error));

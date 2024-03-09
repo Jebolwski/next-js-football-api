@@ -132,10 +132,10 @@ const Team = (params) => {
                 </div>
                 {matches &&
                   matches.matches &&
-                  matches?.matches.map((match) => {
+                  matches?.matches.map((match, index) => {
                     return (
-                      <div className="my-2">
-                        <LiveMatch match={match} key={match.id} team={team} />
+                      <div className="my-2" key={index}>
+                        <LiveMatch match={match} key={index} team={team} />
                       </div>
                     );
                   })}

@@ -13,8 +13,6 @@ const Live_matches = () => {
     toggleShowOdds(false);
   }, []);
 
-  console.log(showOdds);
-
   return (
     <div className="w-full p-2 md:p-4 md:w-11/12">
       {leagues && leagues.length > 0 ? (
