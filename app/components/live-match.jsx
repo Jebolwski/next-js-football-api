@@ -8,7 +8,7 @@ import FootballContext from "../routing/football_context";
 
 const LiveMatch = ({ match, team }) => {
   const [time, setTime] = useState("");
-  const { showOdds } = useContext(FootballContext);
+  const { showOdds, setMatchF } = useContext(FootballContext);
 
   useEffect(() => {
     let number = Date.parse(match.utcDate);
@@ -64,8 +64,11 @@ const LiveMatch = ({ match, team }) => {
             </Link>
           </div>
           <Link
+            onClick={() => {
+              setMatchF(match);
+            }}
             href={{
-              pathname: "/match/" + match.homeTeam.id,
+              pathname: "/match",
             }}
           >
             <div className="flex items-center gap-2">

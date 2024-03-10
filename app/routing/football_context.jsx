@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { apiKey } from "@/app/firebase";
 const FootballContext = createContext({});
 
 export default FootballContext;
@@ -10,8 +9,13 @@ export const FootballProvider = ({ children }) => {
   const [age, setAge] = useState();
   const [team, setTeam] = useState({});
   const [matches, setMatches] = useState({});
+  const [match, setMatch] = useState();
   const [person, setPerson] = useState({});
   const [showOdds, setShowOdds] = useState(false);
+
+  const setMatchF = (match) => {
+    setMatch(match);
+  };
 
   function calculateAge(birthDate) {
     // Parse the birthDate string to a Date object
@@ -135,6 +139,8 @@ export const FootballProvider = ({ children }) => {
     getTeamsMatches: getTeamsMatches,
     toggleShowOdds: toggleShowOdds,
     showOdds: showOdds,
+    match: match,
+    setMatchF: setMatchF,
   };
 
   return (
