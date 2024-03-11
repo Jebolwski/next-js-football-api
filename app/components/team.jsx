@@ -121,11 +121,14 @@ const Team = (params) => {
                   <h3 className="text-lg font-semibold">Matches</h3>
                   <div
                     onClick={toggleShowOdds}
-                    className="dark:bg-gray-500 cursor-pointer shadow-lg bg-gray-200 border rounded-full p-1 dark:border-gray-700 border-gray-300 "
+                    className={
+                      "dark:bg-gray-500 bg-gray-200 cursor-pointer shadow-lg border rounded-full p-1 " +
+                      (showOdds == true ? "border-green-500" : "border-red-500")
+                    }
                   >
                     <FaMoneyCheckAlt
                       title="Show/Hide Odds"
-                      className=" dark:text-white text-black"
+                      className="dark:text-white text-black"
                       size={12}
                     />
                   </div>

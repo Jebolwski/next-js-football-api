@@ -70,6 +70,22 @@ export const FootballProvider = ({ children }) => {
       .catch((error) => console.error(error));
   };
 
+  const getMatch = (id) => {
+    setMatch();
+    fetch(`/api/get-match/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(async (response) => {
+        let data = await response.json();
+        console.log(data);
+        setMatch(data);
+      })
+      .catch((error) => console.error(error));
+  };
+
   const getTeam = async (id) => {
     setTeam();
     fetch(`/api/team-data/${id}`, {
@@ -141,6 +157,7 @@ export const FootballProvider = ({ children }) => {
     showOdds: showOdds,
     match: match,
     setMatchF: setMatchF,
+    getMatch: getMatch,
   };
 
   return (

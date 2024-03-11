@@ -28,7 +28,7 @@ const LiveMatch = ({ match, team }) => {
           (showOdds ? "rounded-t-md" : "rounded-md")
         }
       >
-        <div className="flex items-center gap-1">
+        <div className="items-center gap-1 hidden md:flex">
           <MdOutlineStarOutline size={20} color="#dad775" />
           {match.status == "POSTPONED" ? (
             <FaRegCalendarTimes title="Postponed" size={16} />
@@ -64,11 +64,8 @@ const LiveMatch = ({ match, team }) => {
             </Link>
           </div>
           <Link
-            onClick={() => {
-              setMatchF(match);
-            }}
             href={{
-              pathname: "/match",
+              pathname: "/match/" + match.id,
             }}
           >
             <div className="flex items-center gap-2">
@@ -104,7 +101,7 @@ const LiveMatch = ({ match, team }) => {
             </Link>
           </div>
         </div>
-        <div className="flex items-center gap-1 w-20 justify-end">
+        <div className="items-center gap-1 w-20 justify-end hidden md:flex">
           <p className="italic text-sm text-gray-500">{time}</p>
           <IoTimeOutline />
         </div>

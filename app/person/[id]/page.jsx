@@ -11,7 +11,7 @@ const Page = (params) => {
 
   return (
     <div className="dark:bg-gray-800 bg-gray-50 dark:text-white text-black p-4 flex justify-center">
-      <div className="dark:bg-gray-700 bg-gray-100 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-100 shadow-lg lg:w-3/4 w-full">
+      <div className="dark:bg-gray-700 bg-gray-100 rounded-md border border-gray-300 dark:border-gray-600 shadow-lg lg:w-3/4 w-full">
         {person && person.currentTeam ? (
           <>
             <div className=" dark:text-white text-black flex justify-between items-start rounded-md flex-wrap p-4">
