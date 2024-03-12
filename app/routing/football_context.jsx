@@ -5,7 +5,7 @@ export default FootballContext;
 
 export const FootballProvider = ({ children }) => {
   const [leagues, setLeagues] = useState({});
-  const [standings, setStandings] = useState({});
+  const [standings, setStandings] = useState();
   const [age, setAge] = useState();
   const [team, setTeam] = useState({});
   const [matches, setMatches] = useState({});
@@ -55,9 +55,9 @@ export const FootballProvider = ({ children }) => {
       .catch((error) => console.error(error), "!!!!!!!!!!!!!");
   };
 
-  const getStandings = (id) => {
+  const getStandings = (id, year) => {
     setStandings();
-    fetch(`/api/standings/${id}`, {
+    fetch(`/api/standings/${id}/${year}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +66,7 @@ export const FootballProvider = ({ children }) => {
       .then(async (response) => {
         let data = await response.json();
         setStandings(data);
+        console.log(data);
       })
       .catch((error) => console.error(error));
   };
