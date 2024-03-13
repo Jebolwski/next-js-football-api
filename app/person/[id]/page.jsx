@@ -58,7 +58,7 @@ const Page = (params) => {
                 Birthdate : {person?.dateOfBirth} ({age})
               </p>
             </div>
-            <div className="p-3">
+            <div className="p-3 dark:bg-gray-800 bg-gray-100 rounded-md">
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-semibold">Players Matches</h3>
                 <div
