@@ -18,13 +18,12 @@ const Standings = (params) => {
           <p>Season</p>
           <select
             className="bg-gray-300/50 rounded-md"
+            defaultValue={"2023"}
             onChange={(e) => {
               setYear(e.target.value);
             }}
           >
-            <option value="2023" selected>
-              2023-24
-            </option>
+            <option value="2023">2023-24</option>
             <option value="2022">2022-23</option>
             <option value="2021">2021-22</option>
             <option value="2020">2020-21</option>

@@ -3,10 +3,22 @@ import FootballContext from "@/app/routing/football_context";
 import Image from "next/image";
 import React, { useContext, useEffect } from "react";
 import Link from "next/link";
+import LiveMatch from "@/app/components/live-match";
+import { FaMoneyCheckAlt } from "react-icons/fa";
+
 const Page = (params) => {
-  const { getPerson, person, age } = useContext(FootballContext);
+  const {
+    getPerson,
+    person,
+    age,
+    getPlayerMatches,
+    matches,
+    showOdds,
+    toggleShowOdds,
+  } = useContext(FootballContext);
   useEffect(() => {
     getPerson(params.params.id);
+    getPlayerMatches(params.params.id);
   }, []);
 
   return (
@@ -40,11 +52,42 @@ const Page = (params) => {
                 </p>
               </Link>
             </div>
-            <div className="flex items-center justify-between mt-4 dark:bg-gray-600 dark:border-gray-800 border-gray-300 bg-gray-200 border-t rounded-b-md p-2">
+            <div className="flex items-center justify-between mt-4 dark:bg-gray-600 dark:border-gray-800 border-gray-300 bg-gray-200 border-t p-2">
               <p>Position : {person?.position}</p>
               <p>
                 Birthdate : {person?.dateOfBirth} ({age})
               </p>
+            </div>
+            <div className="p-3">
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold">Players Matches</h3>
+                <div
+                  onClick={toggleShowOdds}
+                  className={
+                    "dark:bg-gray-500 bg-gray-200 cursor-pointer shadow-lg border rounded-full p-1 " +
+                    (showOdds == true ? "border-green-500" : "border-red-500")
+                  }
+                >
+                  <FaMoneyCheckAlt
+                    title="Show/Hide Odds"
+                    className="dark:text-white text-black"
+                    size={12}
+                  />
+                </div>
+              </div>
+              {matches &&
+                matches.matches &&
+                matches?.matches.map((match, index) => {
+                  return (
+                    <div className="my-2" key={index}>
+                      <LiveMatch
+                        match={match}
+                        key={index}
+                        team={person.currentTeam}
+                      />
+                    </div>
+                  );
+                })}
             </div>
           </>
         ) : (

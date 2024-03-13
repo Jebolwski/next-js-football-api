@@ -66,7 +66,6 @@ export const FootballProvider = ({ children }) => {
       .then(async (response) => {
         let data = await response.json();
         setStandings(data);
-        console.log(data);
       })
       .catch((error) => console.error(error));
   };
@@ -81,7 +80,6 @@ export const FootballProvider = ({ children }) => {
     })
       .then(async (response) => {
         let data = await response.json();
-        console.log(data);
         setMatch(data);
       })
       .catch((error) => console.error(error));
@@ -142,6 +140,21 @@ export const FootballProvider = ({ children }) => {
     }
   };
 
+  const getPlayerMatches = (id) => {
+    fetch(`/api/player-matches/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(async (response) => {
+        let data = await response.json();
+        console.log(data);
+        setMatches(data);
+      })
+      .catch((error) => console.error(error));
+  };
+
   let contextData = {
     leagues: leagues,
     getLeagues: getLeagues,
@@ -153,6 +166,7 @@ export const FootballProvider = ({ children }) => {
     person: person,
     age: age,
     matches: matches,
+    getPlayerMatches: getPlayerMatches,
     getTeamsMatches: getTeamsMatches,
     toggleShowOdds: toggleShowOdds,
     showOdds: showOdds,
