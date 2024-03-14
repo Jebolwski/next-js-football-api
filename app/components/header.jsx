@@ -28,22 +28,33 @@ const Header = () => {
           <p className="text-xl">Pellucid Football</p>
         </Link>
       </div>
-      {user != null ? (
-        <div
-          className={
-            "flex items-center justify-between border dark:bg-gray-700 bg-gray-200 border-black/5 dark:text-white shadow-lg text-black p-2"
-          }
-        >
-          <p>{user.email}</p>
+      <div
+        className={
+          "flex items-center justify-between border dark:bg-gray-700 bg-gray-200 border-black/5 dark:text-white shadow-lg text-black p-2"
+        }
+      >
+        {user != null ? (
+          <>
+            <p>{user.email}</p>
 
-          <button
-            className="bg-sky-400 dark:bg-sky-950 text-white rounded-md px-4 py-1 text-sm shadow-md border border-sky-300 dark:border-sky-900"
-            onClick={logout}
-          >
-            Logout
-          </button>
-        </div>
-      ) : null}
+            <button
+              className="bg-sky-400 dark:bg-sky-950 text-white rounded-md px-4 py-1 text-sm shadow-md border border-sky-300 dark:border-sky-900"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <p>Welcome, stranger!</p>
+            <Link href={"/login"}>
+              <button className="bg-sky-400 dark:bg-sky-950 text-white rounded-md px-4 py-1 text-sm shadow-md border border-sky-300 dark:border-sky-900">
+                Login
+              </button>
+            </Link>
+          </>
+        )}
+      </div>
       <div
         onClick={toggleDarkMode}
         className="dark:bg-gray-500 cursor-pointer shadow-lg bg-gray-200 border rounded-full p-2 dark:border-gray-700 border-gray-300 absolute right-1 top-1"
