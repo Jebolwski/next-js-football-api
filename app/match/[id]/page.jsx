@@ -118,9 +118,40 @@ const Page = (params) => {
                 );
               })}
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-2 sm:gap-6 md:gap-10 flex-wrap">
+              <div className="dark:bg-gray-800 bg-gray-200 rounded-md border mt-4 border-gray-300 dark:border-gray-600 shadow-lg">
+                <h2 className="font-semibold text-lg px-2">Your Pick</h2>
+                <div
+                  className={
+                    "flex h-max justify-center content-center dark:bg-gray-800 bg-gray-200 rounded-b-md border-t dark:border-gray-600 border-gray-300 p-1"
+                  }
+                >
+                  <div className=" w-full">
+                    <div className="bg-red-500 text-center h-max">
+                      <p>1</p>
+                    </div>
+                    <p className="text-sm text-center">
+                      {match.homeTeam.shortName} wins
+                    </p>
+                  </div>
+                  <div className=" w-full">
+                    <div className="bg-gray-500 text-center">
+                      <p>X</p>
+                    </div>
+                    <p className="text-sm text-center">Draw</p>
+                  </div>
+                  <div className=" w-full">
+                    <div className="bg-blue-500 text-center">
+                      <p>2</p>
+                    </div>
+                    <p className="text-sm text-center">
+                      {match.awayTeam.shortName} wins
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div className="dark:bg-gray-800 bg-gray-200 rounded-md border w-fit mt-4 border-gray-300 dark:border-gray-600 shadow-lg">
-                <h2 className="font-semibold text-lg px-2">ODDS</h2>
+                <h2 className="font-semibold text-lg px-2">Odds</h2>
                 <div
                   className={
                     "flex items-center justify-center gap-2 dark:bg-gray-800 bg-gray-200 rounded-b-md border-t dark:border-gray-600 border-gray-300 p-1"
