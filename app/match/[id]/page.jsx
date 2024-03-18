@@ -1,15 +1,23 @@
 "use client";
 import React, { useEffect, useState, useContext } from "react";
 import FootballContext from "@/app/routing/football_context";
+import Context from "@/app/routing/context";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 const Page = (params) => {
   const [time, setTime] = useState("");
-  const { match, getMatch } = useContext(FootballContext);
+  const [one, setOne] = useState(0);
+  const [two, setTwo] = useState(0);
+  const [three, setThree] = useState(0);
+  const { match, getMatch, pick, getPicks, picks } =
+    useContext(FootballContext);
+  const { user } = useContext(Context);
   const router = useRouter();
   const x = router.query;
   useEffect(() => {
+    getPicks();
+
     getMatch(params.params.id);
     if (match == null) {
       router.back();
@@ -25,6 +33,13 @@ const Page = (params) => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    setOne(picks[1].one?.length || 0);
+    setTwo(picks[2].two?.length || 0);
+    setThree(picks[0].length || 0);
+    console.log(one, two, three);
+  }, [picks]);
 
   return (
     <div className="dark:bg-gray-800 bg-gray-50 dark:text-white text-black lg:p-4 py-4 px-2 flex justify-center">
@@ -126,22 +141,43 @@ const Page = (params) => {
                     "flex h-max justify-center content-center dark:bg-gray-800 bg-gray-200 rounded-b-md border-t dark:border-gray-600 border-gray-300 p-1"
                   }
                 >
-                  <div className=" w-full">
-                    <div className="bg-red-500 text-center h-max">
+                  <div
+                    className={`w-[${one / (one + two + three) || 1 * 100}%]`}
+                  >
+                    <div
+                      className="bg-red-500 text-center h-max"
+                      onClick={() => {
+                        pick(match.id, user.user_id, 1);
+                      }}
+                    >
                       <p>1</p>
                     </div>
                     <p className="text-sm text-center">
                       {match.homeTeam.shortName} wins
                     </p>
                   </div>
-                  <div className=" w-full">
-                    <div className="bg-gray-500 text-center">
+                  <div
+                    className={`w-[${three / (one + two + three) || 1 * 100}%]`}
+                  >
+                    <div
+                      className="bg-gray-500 text-center"
+                      onClick={() => {
+                        pick(match.id, user.user_id, 0);
+                      }}
+                    >
                       <p>X</p>
                     </div>
                     <p className="text-sm text-center">Draw</p>
                   </div>
-                  <div className=" w-full">
-                    <div className="bg-blue-500 text-center">
+                  <div
+                    className={`w-[${two / (one + two + three) || 1 * 100}%]`}
+                  >
+                    <div
+                      className="bg-blue-500 text-center"
+                      onClick={() => {
+                        pick(match.id, user.user_id, 2);
+                      }}
+                    >
                       <p>2</p>
                     </div>
                     <p className="text-sm text-center">

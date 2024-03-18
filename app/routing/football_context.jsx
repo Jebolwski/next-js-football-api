@@ -1,9 +1,16 @@
 import { createContext, useState } from "react";
+import { and, collection } from "firebase/firestore";
+import { addDoc, getFirestore } from "firebase/firestore";
+import { app } from "../firebase.js";
+import { query, where, getDocs } from "firebase/firestore";
+
 const FootballContext = createContext({});
 
 export default FootballContext;
 
 export const FootballProvider = ({ children }) => {
+  const db = getFirestore(app);
+
   const [leagues, setLeagues] = useState({});
   const [standings, setStandings] = useState();
   const [age, setAge] = useState();
@@ -11,6 +18,7 @@ export const FootballProvider = ({ children }) => {
   const [matches, setMatches] = useState({});
   const [match, setMatch] = useState();
   const [person, setPerson] = useState({});
+  const [picks, setPicks] = useState({ 0: [], 1: [], 2: [] });
   const [showOdds, setShowOdds] = useState(false);
 
   const setMatchF = (match) => {
@@ -140,6 +148,53 @@ export const FootballProvider = ({ children }) => {
     }
   };
 
+  const pick = async (match_id, user_id, pick) => {
+    let x = await addDoc(collection(db, "pick"), {
+      "match-id": match_id,
+      "user-id": user_id,
+      pick: pick,
+    });
+    console.log(x);
+  };
+
+  const getPicks = async () => {
+    const q0 = query(
+      collection(db, "pick"),
+      and(where("pick", "==", 0), where("match-id", "==", match?.id || 0))
+    );
+    const q1 = query(
+      collection(db, "pick"),
+      and(where("pick", "==", 1), where("match-id", "==", match?.id || 0))
+    );
+    const q2 = query(
+      collection(db, "pick"),
+      and(where("pick", "==", 2), where("match-id", "==", match?.id || 0))
+    );
+
+    let querySnapshot = await getDocs(q0);
+    querySnapshot.forEach((doc) => {
+      let dp = picks;
+      dp[0].push({ id: doc.id, ...doc.data() });
+      setPicks(dp);
+    });
+
+    querySnapshot = await getDocs(q1);
+    querySnapshot.forEach((doc) => {
+      let dp = picks;
+      dp[1].push({ id: doc.id, ...doc.data() });
+      setPicks(dp);
+    });
+
+    querySnapshot = await getDocs(q2);
+    querySnapshot.forEach((doc) => {
+      let dp = picks;
+      dp[2].push({ id: doc.id, ...doc.data() });
+      setPicks(dp);
+    });
+
+    console.log(picks);
+  };
+
   const getPlayerMatches = (id) => {
     fetch(`/api/player-matches/${id}`, {
       method: "GET",
@@ -173,6 +228,9 @@ export const FootballProvider = ({ children }) => {
     match: match,
     setMatchF: setMatchF,
     getMatch: getMatch,
+    pick: pick,
+    getPicks: getPicks,
+    picks: picks,
   };
 
   return (
