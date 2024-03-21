@@ -5,8 +5,7 @@ import Image from "next/image";
 import LiveMatch from "./live-match";
 import Link from "next/link";
 const Live_matches = () => {
-  const { leagues, getLeagues, getStandings, showOdds, toggleShowOdds } =
-    useContext(FootballContext);
+  const { leagues, getLeagues, toggleShowOdds } = useContext(FootballContext);
 
   useLayoutEffect(() => {
     getLeagues();
