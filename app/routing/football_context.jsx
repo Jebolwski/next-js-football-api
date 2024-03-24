@@ -156,7 +156,6 @@ export const FootballProvider = ({ children }) => {
       "user-id": user_id,
       pick: pick,
     });
-    console.log(x);
   };
 
   const getPlayerMatches = (id) => {
