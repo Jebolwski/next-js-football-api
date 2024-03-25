@@ -50,6 +50,10 @@ const Live_matches = () => {
             );
           }
         })
+      ) : leagues && leagues.length == 0 ? (
+        <div className="text-center font-semibold text-lg text-black dark:text-white">
+          There are no matches today.
+        </div>
       ) : (
         <div className="text-center font-semibold text-lg text-black dark:text-white">
           Loading...

@@ -11,11 +11,12 @@ import { and, collection, onSnapshot } from "firebase/firestore";
 const Page = (params) => {
   const [time, setTime] = useState("");
   const [one, setOne] = useState(0);
+  const [future, setFuture] = useState(true);
   const [two, setTwo] = useState(0);
   const [zero, setZero] = useState(0);
   const [show, setShow] = useState(false);
   const [match, setMatch] = useState();
-  const [picks, setPicks] = useState([]);
+  const [picks, setPicks] = useState();
   const { pick, db } = useContext(FootballContext);
   const { user } = useContext(Context);
 
@@ -23,6 +24,7 @@ const Page = (params) => {
 
   const pickMatch = (match_id, user_id, side) => {
     pick(match_id, user_id, side);
+    console.log("pickmatch");
     setShow(true);
   };
 
@@ -43,6 +45,10 @@ const Page = (params) => {
 
           let number = Date.parse(data.utcDate);
           var date = new Date(number);
+          if (date < new Date()) {
+            console.log("yes");
+            setFuture(false);
+          }
           if (date.getMinutes().toString() == "0") {
             setTime(date.getHours().toString() + ":" + "00");
           } else {
@@ -57,33 +63,33 @@ const Page = (params) => {
   };
 
   const setPicksByPick = () => {
-    let pick_two = picks.filter((pick) => {
-      return pick.pick == 2;
-    });
-    let pick_one = picks.filter((pick) => {
-      return pick.pick == 1;
-    });
-    let pick_zero = picks.filter((pick) => {
-      return pick.pick == 0;
-    });
-    setOne(pick_one.length);
-    setTwo(pick_two.length);
-    setZero(pick_zero.length);
+    if (picks) {
+      let pick_two = picks.filter((pick) => {
+        return pick.pick == 2;
+      });
+      let pick_one = picks.filter((pick) => {
+        return pick.pick == 1;
+      });
+      let pick_zero = picks.filter((pick) => {
+        return pick.pick == 0;
+      });
+      setOne(pick_one.length);
+      setTwo(pick_two.length);
+      setZero(pick_zero.length);
+    }
   };
 
-  useEffect(() => {
-    setPicksByPick();
-  }, [picks]);
-
-  useEffect(() => {
-    getMatchFunction();
-  }, []);
-
-  useEffect(() => {
-    if (show == true) {
-      setWidth();
+  const checkIfVoted = () => {
+    if (picks) {
+      let arr = picks.filter((pick) => {
+        return pick["user-id"] == user.user_id;
+      });
+      if (arr.length > 0) {
+        console.log("voted");
+        setShow(true);
+      }
     }
-  }, [one, zero, two, show]);
+  };
 
   const setWidth = () => {
     let one_div = document.querySelector(".one_w");
@@ -94,10 +100,7 @@ const Page = (params) => {
       two_div.style.width = ((two / (one + two + zero)) * 100).toFixed(2) + "%";
       draw_div.style.width =
         ((zero / (one + two + zero)) * 100).toFixed(2) + "%";
-    } else {
-      console.log("yokki");
     }
-    console.log(one, zero, two, "arab aaa");
   };
 
   const getPicks = (match_id) => {
@@ -111,13 +114,37 @@ const Page = (params) => {
     return unsubscribe;
   };
 
+  useEffect(() => {
+    setPicksByPick();
+    checkIfVoted();
+  }, [picks]);
+
+  useEffect(() => {
+    if (future == false) {
+      setShow(true);
+    }
+  }, [future]);
+
+  useEffect(() => {
+    getMatchFunction();
+  }, []);
+
+  useEffect(() => {
+    if (show == true) {
+      setWidth();
+    }
+  }, [one, zero, two, show]);
+
   return (
     <div className="dark:bg-gray-800 bg-gray-50 dark:text-white text-black lg:p-4 py-4 px-2 flex justify-center">
       <div className="dark:bg-gray-700 bg-gray-100 rounded-md border border-gray-300 dark:border-gray-600 px-2 pb-3 shadow-lg lg:w-3/4 w-full">
         {match != null && match.score != null ? (
           <>
             <div className="flex justify-center">
-              <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 h-min border-b border-l border-r border-gray-300 dark:border-gray-600 p-1 rounded-b-lg shadow-md">
+              <Link
+                href={"/standings/" + match?.competition?.id}
+                className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 h-min border-b border-l border-r border-gray-300 dark:border-gray-600 p-1 rounded-b-lg shadow-md"
+              >
                 <Image
                   src={match?.competition?.emblem}
                   alt={"League Country"}
@@ -128,7 +155,7 @@ const Page = (params) => {
                 <p className="font-semibold text-lg">
                   {match?.competition?.name}
                 </p>
-              </div>
+              </Link>
             </div>
             <div className="text-center">
               <p className="italic mt-1">Week {match.matchday}</p>
@@ -214,96 +241,140 @@ const Page = (params) => {
                   } dark:bg-gray-800 bg-gray-200 rounded-b-md border-t dark:border-gray-600 border-gray-300 p-1
                   `}
                 >
-                  <div className="w-[33%] one_w duration-200">
-                    <div>
-                      <div
-                        className={`bg-red-500 h-6 duration-300 px-2 ${
-                          show
-                            ? ""
-                            : "rounded-sm cursor-pointer hover:bg-red-700 "
-                        } text-center`}
-                        onClick={() => {
-                          if (show == false) {
-                            pickMatch(match.id, user.user_id, 1);
-                          }
-                        }}
-                      >
-                        {show ? (
-                          <p className="text-xs pt-[3px]">
-                            {((one / (one + two + zero)) * 100).toFixed(1)}%
-                          </p>
-                        ) : (
-                          <p>1</p>
-                        )}
-                      </div>
-                      {show == false ? (
-                        <p className="text-sm text-center">
-                          {match.homeTeam.shortName} wins
-                        </p>
-                      ) : ((one / (one + two + zero)) * 100).toFixed(1) > 8 ? (
-                        <p className="text-sm italic font-semibold">{one}</p>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="w-[33%] draw_w duration-200">
-                    <div>
-                      <div
-                        className={`bg-gray-500 h-6 duration-300 px-2 ${
-                          show
-                            ? ""
-                            : "rounded-sm cursor-pointer hover:bg-gray-700 "
-                        } text-center`}
-                        onClick={() => {
-                          if (show == false)
-                            pickMatch(match.id, user.user_id, 0);
-                        }}
-                      >
-                        {show ? (
-                          <p className="text-xs pt-[3px]">
-                            {((zero / (one + two + zero)) * 100).toFixed(1)}%
-                          </p>
-                        ) : (
-                          <p>X</p>
-                        )}
-                      </div>
-                      {show == false ? (
-                        <p className="text-sm text-center">Draw</p>
-                      ) : ((zero / (one + two + zero)) * 100).toFixed(1) > 8 ? (
-                        <p className="text-sm italic font-semibold">{zero}</p>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div className="w-[33%] two_w duration-200">
-                    <div>
-                      <div
-                        className={`bg-blue-500 h-6 duration-300 px-2 ${
-                          show
-                            ? ""
-                            : "rounded-sm cursor-pointer hover:bg-blue-700 "
-                        } text-center`}
-                        onClick={() => {
-                          if (show == false) {
-                            pickMatch(match.id, user.user_id, 2);
-                          }
-                        }}
-                      >
-                        {show ? (
-                          <p className="text-xs pt-[3px]">
-                            {((two / (one + two + zero)) * 100).toFixed(1)}%
-                          </p>
-                        ) : (
-                          <p>2</p>
-                        )}
-                      </div>
-                      {show == false ? (
-                        <p className="text-sm text-center">
-                          {match.awayTeam.shortName} wins
-                        </p>
-                      ) : ((two / (one + two + zero)) * 100).toFixed(1) > 8 ? (
-                        <p className="text-sm italic font-semibold">{two}</p>
-                      ) : null}
-                    </div>
-                  </div>
+                  {picks ? (
+                    <>
+                      {future == false && picks.length == 0 ? (
+                        <div className="text-center font-semibold w-full mt-2 text-lg">
+                          Nobody picked this match.
+                        </div>
+                      ) : (
+                        <>
+                          <div className="w-[33%] one_w duration-200">
+                            <div>
+                              <div
+                                className={`bg-red-500 h-6 duration-300 px-2 ${
+                                  show
+                                    ? ""
+                                    : "rounded-sm cursor-pointer hover:bg-red-700 "
+                                } text-center`}
+                                onClick={() => {
+                                  if (show == false) {
+                                    pickMatch(match.id, user.user_id, 1);
+                                  }
+                                }}
+                              >
+                                {show &&
+                                ((one / (one + two + zero)) * 100).toFixed(1) >
+                                  8 ? (
+                                  <p className="text-xs pt-[3px]">
+                                    {((one / (one + two + zero)) * 100).toFixed(
+                                      1
+                                    )}
+                                    %
+                                  </p>
+                                ) : (
+                                  <p className={`${show ? "hidden" : ""}`}>1</p>
+                                )}
+                              </div>
+                              {show == false ? (
+                                <p className="text-sm text-center">
+                                  {match.homeTeam.shortName} wins
+                                </p>
+                              ) : ((one / (one + two + zero)) * 100).toFixed(
+                                  1
+                                ) > 8 ? (
+                                <p className="text-sm italic font-semibold">
+                                  {one}
+                                </p>
+                              ) : null}
+                            </div>
+                          </div>
+                          <div className="w-[33%] draw_w duration-200">
+                            <div>
+                              <div
+                                className={`bg-gray-500 h-6 duration-300 ${
+                                  show
+                                    ? ""
+                                    : "rounded-sm px-2 cursor-pointer hover:bg-gray-700 "
+                                } text-center`}
+                                onClick={() => {
+                                  if (show == false)
+                                    pickMatch(match.id, user.user_id, 0);
+                                }}
+                              >
+                                {show &&
+                                ((zero / (one + two + zero)) * 100).toFixed(1) >
+                                  8 ? (
+                                  <p className="text-xs pt-[3px]">
+                                    {(
+                                      (zero / (one + two + zero)) *
+                                      100
+                                    ).toFixed(1)}
+                                    %
+                                  </p>
+                                ) : (
+                                  <p className={`${show ? "hidden" : ""}`}>X</p>
+                                )}
+                              </div>
+                              {show == false ? (
+                                <p className="text-sm text-center">Draw</p>
+                              ) : ((zero / (one + two + zero)) * 100).toFixed(
+                                  1
+                                ) > 8 ? (
+                                <p className="text-sm italic font-semibold">
+                                  {zero}
+                                </p>
+                              ) : null}
+                            </div>
+                          </div>
+                          <div className="w-[33%] two_w duration-200">
+                            <div>
+                              <div
+                                className={`bg-blue-500 h-6 duration-300 ${
+                                  show
+                                    ? ""
+                                    : "rounded-sm px-2 cursor-pointer hover:bg-blue-700"
+                                } text-center`}
+                                onClick={() => {
+                                  if (show == false) {
+                                    pickMatch(match.id, user.user_id, 2);
+                                  }
+                                }}
+                              >
+                                {show &&
+                                ((two / (one + two + zero)) * 100).toFixed(1) >
+                                  8 ? (
+                                  <p className="text-xs pt-[3px]">
+                                    {((two / (one + two + zero)) * 100).toFixed(
+                                      1
+                                    )}
+                                    %
+                                  </p>
+                                ) : (
+                                  <p className={`${show ? "hidden" : ""}`}>2</p>
+                                )}
+                              </div>
+                              {show == false ? (
+                                <p className="text-sm text-center">
+                                  {match.awayTeam.shortName} wins
+                                </p>
+                              ) : ((two / (one + two + zero)) * 100).toFixed(
+                                  1
+                                ) > 8 ? (
+                                <p className="text-sm italic font-semibold">
+                                  {two}
+                                </p>
+                              ) : null}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-lg font-semibold text-center w-full">
+                      Loading...
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="dark:bg-gray-800 bg-gray-200 rounded-md w-fit mt-4 border border-gray-300 dark:border-gray-600 shadow-lg">
@@ -329,7 +400,7 @@ const Page = (params) => {
                     <div>
                       <p className="text-center italic">2</p>
                       <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
-                        {match.odds.awayWin}
+                        {match.odds.awayWin || "-"}
                       </p>
                     </div>
                   </div>

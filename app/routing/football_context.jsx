@@ -10,7 +10,7 @@ export default FootballContext;
 export const FootballProvider = ({ children }) => {
   const db = getFirestore(app);
 
-  const [leagues, setLeagues] = useState({});
+  const [leagues, setLeagues] = useState();
   const [standings, setStandings] = useState();
   const [age, setAge] = useState();
   const [team, setTeam] = useState({});
