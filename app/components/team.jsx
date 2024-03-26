@@ -1,28 +1,53 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FootballContext from "@/app/routing/football_context";
+import Context from "../routing/context";
 import Image from "next/image";
 import Link from "next/link";
+import { query, where } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { FaShieldAlt } from "react-icons/fa";
 import { IoIosFootball } from "react-icons/io";
 import { TbPlayFootball } from "react-icons/tb";
 import LiveMatch from "./live-match";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import { MdOutlineStarOutline } from "react-icons/md";
 
 const Team = (params) => {
+  const { user } = useContext(Context);
+
   const {
     getTeam,
     team,
-    getPerson,
     getTeamsMatches,
+    setShowOdds,
     matches,
     showOdds,
     toggleShowOdds,
+    followPlayer,
+    db,
   } = useContext(FootballContext);
   useEffect(() => {
     getTeam(params.params.id);
     getTeamsMatches(params.params.id);
+    setShowOdds(false);
+    getFavorites();
   }, []);
+
+  const [favorites, setFavorites] = useState();
+
+  console.log(favorites);
+
+  const getFavorites = () => {
+    const q0 = query(
+      collection(db, "pick"),
+      where("user-id", "==", user?.id || 0)
+    );
+    const unsubscribe = onSnapshot(q0, (snapshot) => {
+      setFavorites(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+    return unsubscribe;
+  };
 
   return (
     <div>
@@ -98,7 +123,18 @@ const Team = (params) => {
                           key={player.id}
                           className="bg-gray-200 dark:bg-gray-800 shadow-md border dark:border-gray-700 border-gray-200 p-2 rounded-md"
                         >
-                          <p className="text-sm font-semibold">{player.name}</p>
+                          <div className="flex justify-between gap-5 items-center">
+                            <p className="text-sm font-semibold">
+                              {player.name}
+                            </p>
+                            <MdOutlineStarOutline
+                              onClick={() => {
+                                followPlayer(player.id, user?.user_id);
+                              }}
+                              size={19}
+                              color="#FFFF00"
+                            />
+                          </div>
                           <div className="text-xs italic flex items-center gap-1">
                             <p>{player.position}</p>
                             {player.position == "Defence" ? (

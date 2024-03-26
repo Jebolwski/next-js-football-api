@@ -158,6 +158,14 @@ export const FootballProvider = ({ children }) => {
     });
   };
 
+  const followPlayer = async (player_id, user_id) => {
+    console.log(player_id, user_id);
+    let x = await addDoc(collection(db, "follow-player"), {
+      "player-id": player_id,
+      "user-id": user_id,
+    });
+  };
+
   const getPlayerMatches = (id) => {
     fetch(`/api/player-matches/${id}`, {
       method: "GET",
@@ -193,6 +201,8 @@ export const FootballProvider = ({ children }) => {
     getMatch: getMatch,
     pick: pick,
     db: db,
+    setShowOdds: setShowOdds,
+    followPlayer: followPlayer,
   };
 
   return (

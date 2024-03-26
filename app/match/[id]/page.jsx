@@ -386,20 +386,68 @@ const Page = (params) => {
                     }
                   >
                     <div>
-                      <p className="text-center italic">1</p>
-                      <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
+                      <p
+                        className={`text-center italic ${
+                          match?.score.fullTime?.home >
+                          match?.score.fullTime?.away
+                            ? "text-green-500"
+                            : ""
+                        }`}
+                      >
+                        1
+                      </p>
+                      <p
+                        className={`text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200 ${
+                          match?.score.fullTime?.home >
+                          match?.score.fullTime?.away
+                            ? "border-green-500 text-green-500"
+                            : ""
+                        }`}
+                      >
                         {match.odds.homeWin}
                       </p>
                     </div>
                     <div>
-                      <p className="text-center italic">X</p>
-                      <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
+                      <p
+                        className={`text-center italic ${
+                          match?.score.fullTime?.home ==
+                          match?.score.fullTime?.away
+                            ? "text-green-500"
+                            : ""
+                        }`}
+                      >
+                        X
+                      </p>
+                      <p
+                        className={`text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200 ${
+                          match?.score.fullTime?.home ==
+                          match?.score.fullTime?.away
+                            ? "border-green-500 text-green-500"
+                            : ""
+                        }`}
+                      >
                         {match.odds.draw}
                       </p>
                     </div>
                     <div>
-                      <p className="text-center italic">2</p>
-                      <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
+                      <p
+                        className={`text-center italic ${
+                          match?.score.fullTime?.away >
+                          match?.score.fullTime?.home
+                            ? "text-green-500"
+                            : ""
+                        }`}
+                      >
+                        2
+                      </p>
+                      <p
+                        className={`text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200 ${
+                          match?.score.fullTime?.away >
+                          match?.score.fullTime?.home
+                            ? "border-green-500 text-green-500"
+                            : ""
+                        }`}
+                      >
                         {match.odds.awayWin || "-"}
                       </p>
                     </div>
