@@ -11,7 +11,7 @@ import { IoIosFootball } from "react-icons/io";
 import { TbPlayFootball } from "react-icons/tb";
 import LiveMatch from "./live-match";
 import { FaMoneyCheckAlt } from "react-icons/fa";
-import { MdOutlineStarOutline } from "react-icons/md";
+import { MdOutlineStar, MdOutlineStarOutline } from "react-icons/md";
 
 const Team = (params) => {
   const { user } = useContext(Context);
@@ -27,26 +27,41 @@ const Team = (params) => {
     followPlayer,
     db,
   } = useContext(FootballContext);
+
   useEffect(() => {
+    getFavorites();
     getTeam(params.params.id);
     getTeamsMatches(params.params.id);
     setShowOdds(false);
-    getFavorites();
-  }, []);
+  }, [user]);
 
   const [favorites, setFavorites] = useState();
 
-  console.log(favorites);
-
   const getFavorites = () => {
-    const q0 = query(
-      collection(db, "pick"),
-      where("user-id", "==", user?.id || 0)
-    );
-    const unsubscribe = onSnapshot(q0, (snapshot) => {
-      setFavorites(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-    return unsubscribe;
+    if (user && user.user_id) {
+      const q0 = query(
+        collection(db, "follow-player"),
+        where("user-id", "==", user?.user_id || 0)
+      );
+      const unsubscribe = onSnapshot(q0, (snapshot) => {
+        setFavorites(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      });
+      return unsubscribe;
+    }
+  };
+
+  const inFavorites = (player_id) => {
+    if (favorites && favorites.length > 0) {
+      let x = favorites.filter((favorite) => {
+        return favorite["player-id"] == player_id;
+      });
+      if (x.length > 0) {
+        return true;
+      }
+    }
+    return false;
   };
 
   return (
@@ -114,42 +129,56 @@ const Team = (params) => {
                 </div>
 
                 <div className="mt-6">
-                  <h2 className="font-semibold mb-2">Squad</h2>
-                  <div className="flex items-center flex-wrap gap-2">
-                    {team.squad.map((player) => {
-                      return (
-                        <Link
-                          href={"/person/" + player.id}
-                          key={player.id}
-                          className="bg-gray-200 dark:bg-gray-800 shadow-md border dark:border-gray-700 border-gray-200 p-2 rounded-md"
-                        >
-                          <div className="flex justify-between gap-5 items-center">
-                            <p className="text-sm font-semibold">
-                              {player.name}
-                            </p>
-                            <MdOutlineStarOutline
-                              onClick={() => {
-                                followPlayer(player.id, user?.user_id);
-                              }}
-                              size={19}
-                              color="#FFFF00"
-                            />
-                          </div>
-                          <div className="text-xs italic flex items-center gap-1">
-                            <p>{player.position}</p>
-                            {player.position == "Defence" ? (
-                              <FaShieldAlt size={13} />
-                            ) : player.position == "Midfield" ? (
-                              <TbPlayFootball size={17} />
-                            ) : (
-                              <IoIosFootball size={15} />
-                            )}
-                          </div>
-                          <p className="text-xs">{player.nationality}</p>
-                        </Link>
-                      );
-                    })}
-                  </div>
+                  {user && favorites ? (
+                    <>
+                      <h2 className="font-semibold mb-2">Squad</h2>
+                      <div className="flex items-center flex-wrap gap-2">
+                        {team.squad.map((player) => {
+                          return (
+                            <Link
+                              href={"/person/" + player.id}
+                              key={player.id}
+                              className="bg-gray-200 dark:bg-gray-800 shadow-md border dark:border-gray-700 border-gray-200 p-2 rounded-md"
+                            >
+                              <div className="flex justify-between gap-5 items-center">
+                                <p className="text-sm font-semibold">
+                                  {player.name}
+                                </p>
+                                {inFavorites(player.id) ? (
+                                  <MdOutlineStar
+                                    onClick={() => {
+                                      followPlayer(player.id, user?.user_id);
+                                    }}
+                                    size={19}
+                                    color="#ff8000"
+                                  />
+                                ) : (
+                                  <MdOutlineStarOutline
+                                    onClick={() => {
+                                      followPlayer(player.id, user?.user_id);
+                                    }}
+                                    size={19}
+                                    color="#ff8000"
+                                  />
+                                )}
+                              </div>
+                              <div className="text-xs italic flex items-center gap-1">
+                                <p>{player.position}</p>
+                                {player.position == "Defence" ? (
+                                  <FaShieldAlt size={13} />
+                                ) : player.position == "Midfield" ? (
+                                  <TbPlayFootball size={17} />
+                                ) : (
+                                  <IoIosFootball size={15} />
+                                )}
+                              </div>
+                              <p className="text-xs">{player.nationality}</p>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
               <div className="mt-5 w-full shadow-md border dark:border-gray-700  border-gray-300 my-4 p-3 dark:bg-gray-800 bg-white/50 rounded-md">

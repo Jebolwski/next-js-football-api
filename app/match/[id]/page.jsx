@@ -162,7 +162,7 @@ const Page = (params) => {
             </div>
             <div className="flex justify-evenly lg:p-3 mt-2">
               <Link
-                href={"/team/" + match.awayTeam?.id}
+                href={"/team/" + match.homeTeam?.id}
                 className="flex flex-col items-center justify-center lg:w-40 md:w-32 w-28"
               >
                 <Image
