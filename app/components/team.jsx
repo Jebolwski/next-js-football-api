@@ -135,21 +135,24 @@ const Team = (params) => {
                       <div className="flex items-center flex-wrap gap-2">
                         {team.squad.map((player) => {
                           return (
-                            <Link
-                              href={"/person/" + player.id}
+                            <div
                               key={player.id}
-                              className="bg-gray-200 dark:bg-gray-800 shadow-md border dark:border-gray-700 border-gray-200 p-2 rounded-md"
+                              className="bg-gray-200 dark:bg-gray-800 shadow-md border dark:border-gray-700 border-gray-200 rounded-md"
                             >
-                              <div className="flex justify-between gap-5 items-center">
-                                <p className="text-sm font-semibold">
-                                  {player.name}
-                                </p>
+                              <div className="flex justify-between gap-5 items-center px-2 pt-2">
+                                <Link href={"/person/" + player.id}>
+                                  <p className="text-sm font-semibold">
+                                    {player.name}
+                                  </p>
+                                </Link>
+
                                 {inFavorites(player.id) ? (
                                   <MdOutlineStar
                                     onClick={() => {
                                       followPlayer(player.id, user?.user_id);
                                     }}
                                     size={19}
+                                    className="cursor-pointer"
                                     color="#ff8000"
                                   />
                                 ) : (
@@ -158,22 +161,29 @@ const Team = (params) => {
                                       followPlayer(player.id, user?.user_id);
                                     }}
                                     size={19}
+                                    className="cursor-pointer"
                                     color="#ff8000"
                                   />
                                 )}
                               </div>
-                              <div className="text-xs italic flex items-center gap-1">
-                                <p>{player.position}</p>
-                                {player.position == "Defence" ? (
-                                  <FaShieldAlt size={13} />
-                                ) : player.position == "Midfield" ? (
-                                  <TbPlayFootball size={17} />
-                                ) : (
-                                  <IoIosFootball size={15} />
-                                )}
-                              </div>
-                              <p className="text-xs">{player.nationality}</p>
-                            </Link>
+                              <Link
+                                href={"/person/" + player.id}
+                                key={player.id}
+                                className="p-2 flex flex-col gap-1"
+                              >
+                                <div className="text-xs italic flex items-center gap-1">
+                                  <p>{player.position}</p>
+                                  {player.position == "Defence" ? (
+                                    <FaShieldAlt size={13} />
+                                  ) : player.position == "Midfield" ? (
+                                    <TbPlayFootball size={17} />
+                                  ) : (
+                                    <IoIosFootball size={15} />
+                                  )}
+                                </div>
+                                <p className="text-xs">{player.nationality}</p>
+                              </Link>
+                            </div>
                           );
                         })}
                       </div>

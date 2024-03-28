@@ -10,6 +10,7 @@ import { and, collection, onSnapshot } from "firebase/firestore";
 
 const Page = (params) => {
   const [time, setTime] = useState("");
+  const [date, setDate] = useState(new Date());
   const [one, setOne] = useState(0);
   const [future, setFuture] = useState(true);
   const [two, setTwo] = useState(0);
@@ -24,7 +25,6 @@ const Page = (params) => {
 
   const pickMatch = (match_id, user_id, side) => {
     pick(match_id, user_id, side);
-    console.log("pickmatch");
     setShow(true);
   };
 
@@ -45,8 +45,8 @@ const Page = (params) => {
 
           let number = Date.parse(data.utcDate);
           var date = new Date(number);
+          setDate(date);
           if (date < new Date()) {
-            console.log("yes");
             setFuture(false);
           }
           if (date.getMinutes().toString() == "0") {
@@ -85,7 +85,6 @@ const Page = (params) => {
         return pick["user-id"] == user.user_id;
       });
       if (arr.length > 0) {
-        console.log("voted");
         setShow(true);
       }
     }
@@ -125,6 +124,8 @@ const Page = (params) => {
     }
   }, [future]);
 
+  console.log(match);
+
   useEffect(() => {
     getMatchFunction();
   }, []);
@@ -158,7 +159,12 @@ const Page = (params) => {
               </Link>
             </div>
             <div className="text-center">
-              <p className="italic mt-1">Week {match.matchday}</p>
+              <p className="italic mt-1">Matchday {match.matchday}</p>
+              <p className="italic font-semibold dark:text-green-300 text-green-800">
+                {date.getDate()}{" "}
+                {date.toLocaleString("en-GB", { month: "long" })}{" "}
+                {date.getFullYear()}
+              </p>
             </div>
             <div className="flex justify-evenly lg:p-3 mt-2">
               <Link
@@ -220,7 +226,16 @@ const Page = (params) => {
                 </p>
               </Link>
             </div>
-            <div className="flex items-center justify-center gap-1 mt-3">
+            <div className="flex items-center gap-2 justify-center mt-3">
+              <p className="text-center">Venue : {match.venue}</p>
+              <Image
+                src={match.area.flag}
+                className="w-6"
+                width={100}
+                height={100}
+              />
+            </div>
+            <div className="flex items-center justify-center gap-1 mt-1">
               <p>Refeere :</p>
               {match?.referees.map((ref, index) => {
                 return (
@@ -244,7 +259,7 @@ const Page = (params) => {
                   {picks ? (
                     <>
                       {future == false && picks.length == 0 ? (
-                        <div className="text-center font-semibold w-full mt-2 text-lg">
+                        <div className="text-center font-semibold w-full m-1 text-lg">
                           Nobody picked this match.
                         </div>
                       ) : (
@@ -388,8 +403,7 @@ const Page = (params) => {
                     <div>
                       <p
                         className={`text-center italic ${
-                          match?.score.fullTime?.home >
-                          match?.score.fullTime?.away
+                          match?.score.winner == "HOME_TEAM"
                             ? "text-green-500"
                             : ""
                         }`}
@@ -398,8 +412,7 @@ const Page = (params) => {
                       </p>
                       <p
                         className={`text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200 ${
-                          match?.score.fullTime?.home >
-                          match?.score.fullTime?.away
+                          match?.score.winner == "HOME_TEAM"
                             ? "border-green-500 text-green-500"
                             : ""
                         }`}
@@ -410,18 +423,14 @@ const Page = (params) => {
                     <div>
                       <p
                         className={`text-center italic ${
-                          match?.score.fullTime?.home ==
-                          match?.score.fullTime?.away
-                            ? "text-green-500"
-                            : ""
+                          match?.score.winner == "DRAW" ? "text-green-500" : ""
                         }`}
                       >
                         X
                       </p>
                       <p
                         className={`text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200 ${
-                          match?.score.fullTime?.home ==
-                          match?.score.fullTime?.away
+                          match?.score.winner == "DRAW"
                             ? "border-green-500 text-green-500"
                             : ""
                         }`}
@@ -432,8 +441,7 @@ const Page = (params) => {
                     <div>
                       <p
                         className={`text-center italic ${
-                          match?.score.fullTime?.away >
-                          match?.score.fullTime?.home
+                          match?.score.winner == "AWAY_TEAM"
                             ? "text-green-500"
                             : ""
                         }`}
@@ -442,8 +450,7 @@ const Page = (params) => {
                       </p>
                       <p
                         className={`text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200 ${
-                          match?.score.fullTime?.away >
-                          match?.score.fullTime?.home
+                          match?.score.winner == "AWAY_TEAM"
                             ? "border-green-500 text-green-500"
                             : ""
                         }`}
@@ -452,9 +459,13 @@ const Page = (params) => {
                       </p>
                     </div>
                   </div>
-                ) : (
+                ) : future ? (
                   <div className="border-t dark:border-gray-600 border-gray-300 p-2">
                     <p>Not determined</p>
+                  </div>
+                ) : (
+                  <div className="border-t dark:border-gray-600 border-gray-300 p-2">
+                    <p>Not known</p>
                   </div>
                 )}
               </div>
