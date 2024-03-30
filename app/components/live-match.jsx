@@ -19,17 +19,17 @@ const LiveMatch = ({ match, team }) => {
       setTime(date.getHours().toString() + ":" + date.getMinutes().toString());
     }
   }, []);
-
+  console.log(match.odds);
   return (
     <>
       <div
         className={
-          "flex items-center justify-between gap-3 dark:bg-gray-700 bg-gray-200 shadow-md p-2 duration-200 text-sm md:text-base " +
+          "flex items-center justify-between gap-3 dark:bg-gray-600 bg-gray-300 border dark:border-gray-500 border-gray-400 shadow-md p-2 duration-200 text-sm md:text-base " +
           (showOdds ? "rounded-t-md" : "rounded-md")
         }
       >
         <div className="items-center gap-1 hidden md:flex">
-          <MdOutlineStarOutline size={20} color="#dad775" />
+          <MdOutlineStarOutline size={20} color="#00b609" />
           {match.status == "POSTPONED" ? (
             <FaRegCalendarTimes title="Postponed" size={16} />
           ) : (
@@ -108,8 +108,8 @@ const LiveMatch = ({ match, team }) => {
       </div>
       <div
         className={
-          "flex items-center justify-center gap-2 dark:bg-gray-700 bg-gray-200 rounded-b-md border-t dark:border-gray-600 border-gray-300 p-1 " +
-          (showOdds && match.odds.homeWin ? "" : "hidden")
+          "flex items-center justify-center  gap-2 dark:bg-gray-600 bg-gray-300  border-l border-r border-b rounded-b-md dark:border-gray-500 border-gray-400 p-1 " +
+          (showOdds && match?.odds?.homeWin ? "" : "")
         }
       >
         <div>
