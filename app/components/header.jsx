@@ -30,7 +30,7 @@ const Header = () => {
       </div>
       <div
         className={
-          "flex items-center justify-between border dark:bg-gray-700 bg-gray-200 border-black/5 dark:text-white shadow-lg text-black p-2"
+          "flex items-center justify-between flex-wrap gap-3 border dark:bg-gray-700 bg-gray-200 border-black/5 dark:text-white shadow-lg text-black p-2"
         }
       >
         {user != null ? (
