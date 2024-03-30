@@ -237,13 +237,17 @@ const Page = (params) => {
             </div>
             <div className="flex items-center justify-center gap-1 mt-1">
               <p>Refeere :</p>
-              {match?.referees.map((ref, index) => {
-                return (
-                  <p key={index}>
-                    {ref.name} ({ref.nationality})
-                  </p>
-                );
-              })}
+              {match?.referees && match.referees.length > 0 ? (
+                match?.referees.map((ref, index) => {
+                  return (
+                    <p key={index}>
+                      {ref.name} ({ref.nationality})
+                    </p>
+                  );
+                })
+              ) : (
+                <p>Not determined.</p>
+              )}
             </div>
             <div className="flex justify-center gap-2 rounded-md sm:gap-6 md:gap-10 flex-wrap">
               <div className="dark:bg-gray-800 bg-gray-200 rounded-md border mt-4 border-gray-300 dark:border-gray-600 shadow-lg">
