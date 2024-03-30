@@ -56,7 +56,7 @@ const Live_matches = () => {
                   {league?.matches?.length > 0 ? (
                     league?.matches?.map((match, index) => {
                       return (
-                        <div className="m-1">
+                        <div className="m-1" key={index}>
                           <LiveMatch match={match} key={index} />
                         </div>
                       );
