@@ -19,7 +19,7 @@ const LiveMatch = ({ match, team }) => {
       setTime(date.getHours().toString() + ":" + date.getMinutes().toString());
     }
   }, []);
-  console.log(match.odds);
+  console.log(match.odds, showOdds);
   return (
     <>
       <div
@@ -109,25 +109,25 @@ const LiveMatch = ({ match, team }) => {
       <div
         className={
           "flex items-center justify-center  gap-2 dark:bg-gray-600 bg-gray-300  border-l border-r border-b rounded-b-md dark:border-gray-500 border-gray-400 p-1 " +
-          (showOdds && match?.odds?.homeWin ? "" : "")
+          (showOdds ? "" : "hidden")
         }
       >
         <div>
           <p className="text-center italic">1</p>
           <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
-            {match.odds.homeWin}
+            {match.odds.homeWin || "-"}
           </p>
         </div>
         <div>
           <p className="text-center italic">X</p>
           <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
-            {match.odds.draw}
+            {match.odds.draw || "-"}
           </p>
         </div>
         <div>
           <p className="text-center italic">2</p>
           <p className="text-center font-semibold dark:bg-gray-600 rounded-md border bg-gray-300 px-2 dark:border-gray-800 border-gray-200">
-            {match.odds.awayWin}
+            {match.odds.awayWin || "-"}
           </p>
         </div>
       </div>
