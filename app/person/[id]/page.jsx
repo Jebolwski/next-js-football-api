@@ -58,26 +58,25 @@ const Page = (params) => {
                 Birthdate : {person?.dateOfBirth} ({age})
               </p>
             </div>
-            <div className="p-3 dark:bg-gray-800 bg-gray-100 rounded-md">
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg font-semibold">Players Matches</h3>
-                <div
-                  onClick={toggleShowOdds}
-                  className={
-                    "dark:bg-gray-500 bg-gray-200 cursor-pointer shadow-lg border rounded-full p-1 " +
-                    (showOdds == true ? "border-green-500" : "border-red-500")
-                  }
-                >
-                  <FaMoneyCheckAlt
-                    title="Show/Hide Odds"
-                    className="dark:text-white text-black"
-                    size={12}
-                  />
+            {matches && matches?.matches?.length > 0 ? (
+              <div className="p-3 dark:bg-gray-800 bg-gray-100 rounded-md">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold">Players Matches</h3>
+                  <div
+                    onClick={toggleShowOdds}
+                    className={
+                      "dark:bg-gray-500 bg-gray-200 cursor-pointer shadow-lg border rounded-full p-1 " +
+                      (showOdds == true ? "border-green-500" : "border-red-500")
+                    }
+                  >
+                    <FaMoneyCheckAlt
+                      title="Show/Hide Odds"
+                      className="dark:text-white text-black"
+                      size={12}
+                    />
+                  </div>
                 </div>
-              </div>
-              {matches &&
-                matches.matches &&
-                matches?.matches.map((match, index) => {
+                {matches?.matches.map((match, index) => {
                   return (
                     <div className="my-2" key={index}>
                       <LiveMatch
@@ -88,7 +87,8 @@ const Page = (params) => {
                     </div>
                   );
                 })}
-            </div>
+              </div>
+            ) : null}
           </>
         ) : (
           <p className="text-lg font-semibold text-center p-2">Loading...</p>

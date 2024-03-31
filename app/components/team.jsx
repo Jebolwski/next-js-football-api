@@ -191,7 +191,7 @@ const Team = (params) => {
                   ) : null}
                 </div>
               </div>
-              <div className="mt-5 w-full shadow-md border dark:border-gray-700  border-gray-300 my-4 p-3 dark:bg-gray-800 bg-white/50 rounded-md">
+              <div className="mt-5 w-full shadow-md border dark:border-gray-700  border-gray-300 my-4 p-3 dark:bg-gray-800 bg-gray-100 rounded-md">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold">Matches</h3>
                   <div
